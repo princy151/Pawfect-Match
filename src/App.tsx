@@ -25,7 +25,7 @@ import AMorePets from './pages/adopter/morepets';
 const router = createBrowserRouter([
 
   {
-    path: '/landingpage',
+    path: '/',
     element: < LandingPage/>,
   },
 
