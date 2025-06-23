@@ -7,6 +7,9 @@ const SLogin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,6 +77,19 @@ const SLogin: React.FC = () => {
 
             <form onSubmit={handleLogin}>
               <div className="mb-5 relative mt-8">
+
+                <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16.5 6.75L12 11.25L7.5 6.75M3.75 6.75V17.25H20.25V6.75H3.75Z" />
+                  </svg>
+                </span>
+
                 <input
                   type="email"
                   placeholder="Email"
@@ -85,8 +101,38 @@ const SLogin: React.FC = () => {
               </div>
 
               <div className="mb-10 relative">
+
+                <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <rect
+                      x="5"
+                      y="11"
+                      width="14"
+                      height="10"
+                      rx="2"
+                      ry="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.5"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.5"
+                      d="M8 11V7a4 4 0 018 0v4"
+                    />
+                  </svg>
+                </span>
+
+                {/* Password input */}
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -100,20 +146,16 @@ const SLogin: React.FC = () => {
               )}
 
               <div className="flex items-center justify-between mb-6">
-                <label
-                  className="flex items-center text-lg text-gray-700"
-                  style={{
-                    fontFamily: "'Abhaya Libre', serif",
-                    fontWeight: 800,
-                  }}
-                >
+                <label className="flex items-center text-lg text-gray-700" style={{ fontFamily: "'Abhaya Libre', serif", fontWeight: 800 }}>
                   <input
                     type="checkbox"
-                    id="remember"
                     className="mr-2 accent-orange-700 w-4 h-4"
+                    checked={showPassword}
+                    onChange={() => setShowPassword(!showPassword)}
                   />
-                  Save Password
+                  Show Password
                 </label>
+
 
                 <button
                   type="submit"

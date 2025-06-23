@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Besley&family=Bowlby+One+SC&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Homenaje&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bayon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hind&display=swap');
 
 
 
@@ -15,3 +18,14 @@
   font-family: 'Bowlby One SC', cursive;
 }
 
+.font-homejae {
+  font-family: 'Homenaje', cursive;
+}
+
+.font-bayon {
+  font-family: 'Bayon', sans-serif;
+}
+
+.font-hind {
+  font-family: 'Hind', sans-serif;
+}

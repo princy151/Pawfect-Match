@@ -1,57 +1,14 @@
 import React, { useState } from 'react';
+import Navbar from '../../assets/common/navbar';
 
 const AboutUsPage: React.FC = () => {
   const [showPetsDropdown, setShowPetsDropdown] = useState(false);
   const [showShopDropdown, setShowShopDropdown] = useState(false);
 
   return (
-    <div className="bg-white font-sans px-6 py-10">
+    <div className="bg-white font-sans px-6">
       {/* Navbar */}
-      <nav className="flex justify-between items-center mb-8">
-        <h1 className="font-bold text-xl flex items-center gap-2">
-          <span role="img" aria-label="paw">🐾</span> Pawfect Match
-        </h1>
-
-        <ul className="flex items-center gap-6 text-gray-700 relative">
-          <li className="cursor-pointer">Home</li>
-
-          <li
-            className="relative"
-            onMouseEnter={() => setShowPetsDropdown(true)}
-            onMouseLeave={() => setShowPetsDropdown(false)}
-          >
-            <button className="cursor-pointer">Pets ▾</button>
-            {showPetsDropdown && (
-              <ul className="absolute left-0 top-full mt-2 bg-white shadow-md rounded text-sm z-10 w-40">
-                <li className="px-4 py-2 hover:bg-gray-100">Dog</li>
-                <li className="px-4 py-2 hover:bg-gray-100">Cat</li>
-                <li className="px-4 py-2 hover:bg-gray-100">Rabbits</li>
-                <li className="px-4 py-2 hover:bg-gray-100">Your Favourites</li>
-              </ul>
-            )}
-          </li>
-
-          <li
-            className="relative"
-            onMouseEnter={() => setShowShopDropdown(true)}
-            onMouseLeave={() => setShowShopDropdown(false)}
-          >
-            <button className="cursor-pointer">Shop ▾</button>
-            {showShopDropdown && (
-              <ul className="absolute left-0 top-full mt-2 bg-white shadow-md rounded text-sm z-10 w-40">
-                <li className="px-4 py-2 hover:bg-gray-100">Shop Products</li>
-                <li className="px-4 py-2 hover:bg-gray-100 text-[#B95D2B] font-semibold">My Cart</li>
-              </ul>
-            )}
-          </li>
-
-          <li>
-            <button className="bg-[#B95D2B] text-white px-4 py-2 rounded-full shadow-md">
-              About us
-            </button>
-          </li>
-        </ul>
-      </nav>
+      <Navbar />
 
       {/* Hero Section with Image and Text Overlay */}
       <div className="relative mb-16">
