@@ -10,7 +10,7 @@ const SRegister: React.FC = () => {
 
         <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold uppercase mb-1">First Name</label>
+            <label className="block text-sm font-semibold uppercase mb-1">Shelter Name</label>
             <input
               type="text"
               className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
@@ -19,7 +19,7 @@ const SRegister: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold uppercase mb-1">Last Name</label>
+            <label className="block text-sm font-semibold uppercase mb-1">Location</label>
             <input
               type="text"
               className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
@@ -29,7 +29,7 @@ const SRegister: React.FC = () => {
 
           <div className="md:col-span-2 flex gap-4">
             <div className="flex-1">
-              <label className="block text-sm font-semibold uppercase mb-1">Date of Birth</label>
+              <label className="block text-sm font-semibold uppercase mb-1">Establishment Date</label>
               <div className="flex gap-2">
                 <input
                   type="text"

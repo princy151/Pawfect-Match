@@ -5,16 +5,14 @@ const AdoptionForm: React.FC = () => {
   const [showShopDropdown, setShowShopDropdown] = useState(false);
 
   return (
-    <div className="bg-white px-6 py-10 font-sans">
+    <div className="bg-white font-sans text-lg text-[#333]">
       {/* Navbar */}
-      <nav className="flex justify-between items-center mb-8">
+      <nav className="flex justify-between items-center px-6 md:px-16 lg:px-32 mb-10">
         <h1 className="font-bold text-xl flex items-center gap-2">
           <span role="img" aria-label="paw">🐾</span> Pawfect Match
         </h1>
-
         <ul className="flex items-center gap-6 text-gray-700 relative">
           <li className="cursor-pointer">Home</li>
-
           <li
             onMouseEnter={() => setShowPetsDropdown(true)}
             onMouseLeave={() => setShowPetsDropdown(false)}
@@ -30,7 +28,6 @@ const AdoptionForm: React.FC = () => {
               </ul>
             )}
           </li>
-
           <li
             onMouseEnter={() => setShowShopDropdown(true)}
             onMouseLeave={() => setShowShopDropdown(false)}
@@ -44,93 +41,164 @@ const AdoptionForm: React.FC = () => {
               </ul>
             )}
           </li>
-
           <li className="cursor-pointer">About us</li>
         </ul>
       </nav>
 
-      {/* Header */}
-      <div className="text-center mb-10">
+      {/* Header Image */}
+      <div className="w-full">
         <img
-          src="https://via.placeholder.com/900x150?text=Adoption+Banner"
+          src="src/assets/images/AdopterForm.png"
           alt="Adoption"
-          className="rounded-lg mx-auto"
+          className="w-full h-auto object-cover"
         />
-        <h2 className="text-2xl font-bold mt-6">Adoption Form</h2>
       </div>
 
-      {/* General Info */}
-      <section className="border rounded-md p-6 mb-8">
-        <h3 className="text-lg font-semibold mb-4">General Information</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="text" placeholder="Name" className="border p-2 rounded" />
-          <div className="border border-dashed p-4 rounded text-center">
-            <p className="text-gray-500 text-sm">Choose file to upload</p>
-            <p className="text-xs text-red-500 mt-2 italic">*Must Upload Citizenship image</p>
-          </div>
-          <input type="email" placeholder="Email" className="border p-2 rounded col-span-1" />
-          <input type="tel" placeholder="Phone no. :" className="border p-2 rounded col-span-1" />
-        </div>
-      </section>
-
-      <p className="text-center mb-6">Let's proceed towards the next step 🐶</p>
-
-      {/* Address Info */}
-      <section className="border rounded-md p-6 mb-8">
-        <h3 className="text-lg font-semibold mb-4">Address Information</h3>
-        <input type="text" placeholder="Current address" className="w-full border p-2 mb-4 rounded" />
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <input type="text" placeholder="City:" className="border p-2 rounded" />
-          <input type="text" placeholder="Province:" className="border p-2 rounded" />
-          <input type="text" placeholder="House no.:" className="border p-2 rounded" />
-          <input type="text" placeholder="ZIP Code:" className="border p-2 rounded" />
-        </div>
-      </section>
-
-      <p className="text-center mb-6">Now one last step to adopt me 🐾</p>
-
-      {/* Extra Info */}
-      <section className="border rounded-md p-6 mb-8">
-        <h3 className="text-lg font-semibold mb-4">Extra Information</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <p>Do you own any pets?</p>
-            <div className="flex gap-4 mt-1">
-              <label><input type="radio" name="ownPets" className="mr-1" /> Yes</label>
-              <label><input type="radio" name="ownPets" className="mr-1" /> No</label>
+      {/* Form Content */}
+      <div className="px-6 md:px-16 lg:px-32 py-10">
+        {/* General Information */}
+        <section className="border-[1.5px] border-[#A7522A] bg-[#FFFDFB] p-6 mb-10 shadow-sm">
+          <h3 className="text-xl font-bold mb-4 border-b border-[#A7522A] pb-2">General Information</h3>
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex-1 flex flex-col gap-5 mt-3 mb-3">
+              <input type="text" placeholder="Name" className="bg-white border border-[#A7522A] p-3 rounded-xl" />
+              <input type="email" placeholder="Email" className="bg-white border border-[#A7522A] p-3 rounded-xl" />
+              <input type="tel" placeholder="Phone no." className="bg-white border border-[#A7522A] p-3 rounded-xl" />
+            </div>
+            <div className="w-full md:w-1/2 flex flex-col items-center justify-center border-2 border-dashed border-black rounded-xl p-6 bg-white text-center">
+              <p className="text-gray-500 text-sm">Click here to upload image</p>
+              <p className="text-xs text-[#A7522A] mt-2 italic">*Must Upload Citizenship image</p>
             </div>
           </div>
-          <div>
-            <p>Do you own or rent a home?</p>
-            <div className="flex gap-4 mt-1">
-              <label><input type="radio" name="ownOrRent" className="mr-1" /> Own</label>
-              <label><input type="radio" name="ownOrRent" className="mr-1" /> Rent</label>
+        </section>
+
+        {/* Step Message 1 */}
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <p className="text-lg md:text-xl font-semibold" style={{ fontFamily: 'Abhaya Libre SemiBold' }}>
+            Let's proceed towards the next step
+          </p>
+          <img src="src/assets/images/FormIcon1.png" alt="Step 1" className="w-8 h-8 md:w-10 md:h-10" />
+        </div>
+
+        {/* Address Information */}
+        <section className="border-[1.5px] border-[#A7522A] bg-[#FFFDFB] p-6 mb-10 shadow-sm">
+          <h3 className="text-xl font-bold mb-4 border-b border-[#A7522A] pb-2">Address Information</h3>
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex-1 flex flex-col gap-5 mt-3 mb-3 ">
+              <input type="text" placeholder="Current Address" className="bg-white border border-[#A7522A] p-3 rounded-xl" />
+              <input type="email" placeholder="City" className="bg-white border border-[#A7522A] p-3 rounded-xl" />
+              <input type="tel" placeholder="Province" className="bg-white border border-[#A7522A] p-3 rounded-xl" />
+              <input type="tel" placeholder="House no." className="bg-white border border-[#A7522A] p-3 rounded-xl" />
+            </div>
+            <div className="w-full md:w-1/2 flex flex-col items-center justify-center border-2 border-dashed border-black rounded-xl p-6 bg-white text-center">
+              <p className="text-gray-500 text-sm">Click here to upload image</p>
+              <p className="text-xs text-[#A7522A] mt-2 italic">*Must Upload image from map</p>
             </div>
           </div>
-          <div>
-            <p>Have you raised a pet before?</p>
-            <div className="flex gap-4 mt-1">
-              <label><input type="radio" name="raisedBefore" className="mr-1" /> Yes</label>
-              <label><input type="radio" name="raisedBefore" className="mr-1" /> No</label>
+        </section>
+
+        {/* Step Message 2 */}
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <p className="text-lg md:text-xl font-semibold" style={{ fontFamily: 'Abhaya Libre SemiBold' }}>
+            Now one last step to adopt me
+          </p>
+          <img src="src/assets/images/FormIcon2.png" alt="Step 2" className="w-8 h-8 md:w-10 md:h-10" />
+        </div>
+
+        {/* Extra Information */}
+        <section className="border-[1.5px] border-[#A7522A] bg-[#FFFDFB] p-6 mb-10 shadow-sm">
+          <h3 className="text-xl font-bold mb-6 border-b border-[#A7522A] pb-2">Extra Information</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col justify-between gap-5 mt-3 mb-3">
+              <p className="font-medium">Do you own any pets?</p>
+              <p className="font-medium">Do you own or rent a home?</p>
+              <p className="font-medium">Have you raised a pet before?</p>
+            </div>
+            <div className="flex flex-col justify-between gap-5 mt-3 mb-3">
+              <div className="flex gap-6">
+                <label><input type="radio" name="ownPets" className="mr-2" /> Yes</label>
+                <label><input type="radio" name="ownPets" className="mr-2" /> No</label>
+              </div>
+              <div className="flex gap-6">
+                <label><input type="radio" name="ownOrRent" className="mr-2" /> Own</label>
+                <label><input type="radio" name="ownOrRent" className="mr-2" /> Rent</label>
+              </div>
+              <div className="flex gap-6">
+                <label><input type="radio" name="raisedBefore" className="mr-2" /> Yes</label>
+                <label><input type="radio" name="raisedBefore" className="mr-2" /> No</label>
+              </div>
             </div>
           </div>
+        </section>
+
+        {/* Step Message 3 */}
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <p className="text-lg md:text-xl font-semibold" style={{ fontFamily: 'Abhaya Libre SemiBold' }}>
+            OOPS! Forgot to mention the date
+          </p>
+          <img src="src/assets/images/FormIcon3.png" alt="Step 3" className="w-8 h-8 md:w-10 md:h-10" />
         </div>
-      </section>
 
-      <p className="text-center mb-6">OOPS! Forgot to mention the date 🐾</p>
+        {/* Appointment Date */}
+<section className="border-[1.5px] border-[#A7522A] bg-[#FFFDFB] p-6 mb-12 shadow-sm">
+  <h3 className="text-xl font-bold mb-4 border-b border-[#A7522A] pb-2">Appointment Date</h3>
+  
+  <div className="grid grid-cols-1 gap-5 mt-6 mb-4">
+    
+    {/* Date Row */}
+    <div className="flex flex-col md:flex-row md:items-center md:gap-6">
+      <label className="w-[160px] font-medium mb-1 md:mb-0">Date Selection:</label>
+      <span className="text-gray-600 mb-1 md:mb-0">DD/MM/YYYY</span>
+      <div className="flex items-center border border-[#A7522A] rounded bg-white px-3 py-[6px] w-[180px] md:ml-10">
+        <input
+          type="text"
+          className="flex-1 outline-none bg-transparent"
+          placeholder=""
+        />
+        <img
+          src="src/assets/images/FormCalender.png"
+          alt="Calendar"
+          className="w-5 h-5 ml-2"
+        />
+      </div>
+    </div>
 
-      {/* Appointment Date */}
-      <section className="border rounded-md p-6 mb-8">
-        <h3 className="text-lg font-semibold mb-4">Appointment Date</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="text" placeholder="DD/MM/YYYY" className="border p-2 rounded" />
-          <input type="text" placeholder="hrs : mins" className="border p-2 rounded" />
+    {/* Time Row */}
+<div className="flex flex-col md:flex-row md:items-center md:gap-6">
+  <label className="w-[160px] font-medium mb-1 md:mb-0">Preferred time:</label>
+  <span className="text-gray-600 mb-1 md:mb-0">hrs : mins</span>
+  <div className="flex items-center border border-[#A7522A] rounded bg-white px-3 py-[6px] w-[180px] md:ml-10">
+    <input
+      type="text"
+      className="outline-none bg-transparent w-[30px] text-center"
+      maxLength={2}
+      placeholder="HH"
+    />
+    <span className="mx-1 font-semibold text-[#A7522A]">:</span>
+    <input
+      type="text"
+      className="outline-none bg-transparent w-[30px] text-center"
+      maxLength={2}
+      placeholder="MM"
+    />
+  </div>
+  <img
+      src="src/assets/images/FormClock.png"
+      alt="Clock"
+      className="w-5 h-5 ml-3"
+    />
+</div>
+
+  </div>
+</section>
+
+
+        {/* Submit Button */}
+        <div className="text-center">
+          <button className="bg-[#B95D2B] text-[#E7DAD1] px-10 py-3 rounded-2xl font-extrabold hover:bg-[#994820] transition">
+            SAVE
+          </button>
         </div>
-      </section>
-
-      {/* Submit */}
-      <div className="text-center">
-        <button className="bg-[#B95D2B] text-white px-8 py-2 rounded-full">SAVE</button>
       </div>
     </div>
   );
