@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Besley&family=Bowlby+One+SC&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@600;800&display=swap');
 
+
+
 @import "tailwindcss";
 /* index.css or App.css */
 
@@ -12,3 +14,4 @@
 .font-bowlby {
   font-family: 'Bowlby One SC', cursive;
 }
+

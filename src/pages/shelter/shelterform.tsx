@@ -195,10 +195,10 @@ const SAdoptionForm: React.FC = () => {
 
         {/* Submit Buttons */}
 <div className="flex justify-center gap-35 mt-4">
-  <button className="bg-[#6B9D72] text-[#E7DAD1] px-10 py-3 rounded-2xl font-extrabold hover:bg-[#994820] transition">
+  <button className="bg-[#6B9D72] text-[#E7DAD1] px-10 py-3 rounded-2xl font-extrabold hover:bg-[#476C4D] transition">
     APPROVE
   </button>
-  <button className="bg-[#C93838] text-[#E7DAD1] border-2 border-[#B95D2B] px-10 py-3 rounded-2xl font-extrabold hover:bg-[#FFF1E9] transition">
+  <button className="bg-[#C93838] text-[#E7DAD1] border-2 border-[#B95D2B] px-10 py-3 rounded-2xl font-extrabold hover:bg-[#9D2828] transition">
     DENY
   </button>
 </div>
