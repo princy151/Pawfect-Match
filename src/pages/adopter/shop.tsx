@@ -1,4 +1,5 @@
 import React from 'react';
+import Navbar from '../../assets/common/navbar';
 
 const products = [
   {
@@ -35,28 +36,37 @@ const AShop: React.FC = () => {
   return (
     <div className="bg-white min-h-screen">
       {/* Navbar */}
-      <header className="flex justify-between items-center p-4 border-b">
-        <div className="text-xl font-bold flex items-center gap-1">
-          <span role="img" aria-label="paw">🐾</span> Pawfect Match
-        </div>
-        <nav className="flex gap-6 items-center">
-          <a href="#" className="hover:text-orange-600">Home</a>
-          <div className="relative group">
-            <button className="hover:text-orange-600">Pets ▼</button>
-            {/* Dropdown placeholder */}
-          </div>
-          <button className="bg-orange-600 text-white px-4 py-1 rounded">Shop</button>
-          <a href="#" className="hover:text-orange-600">About us</a>
-        </nav>
-      </header>
+      <Navbar />
 
-      {/* Banner section */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-2 p-4">
-        <img src="https://via.placeholder.com/150x100?text=50%25+Off" alt="banner1" className="w-full h-auto rounded" />
-        <img src="https://via.placeholder.com/150x100?text=Pet+Shop+Offer" alt="banner2" className="w-full h-auto rounded" />
-        <img src="https://via.placeholder.com/150x100?text=Adopt" alt="banner3" className="w-full h-auto rounded" />
-        <img src="https://via.placeholder.com/150x100?text=25%25+Off+Food" alt="banner4" className="w-full h-auto rounded" />
+      {/* Shop Banner Section (Side-by-Side with Padding & Full Images) */}
+      <section className="max-w-6xl mx-auto px-6 py-6">
+        <div className="flex flex-col md:flex-row ">
+          {/* Left: Large main banner image */}
+          <div className="md:w-2/3 w-full">
+            <img
+              src="src/assets/images/Shop1.png"
+              alt="Shop Main Banner"
+              className="w-full h-110 object-contain"
+            />
+          </div>
+
+          {/* Right: Two stacked small banners */}
+          <div className="md:w-1/3 w-full flex flex-col gap-4">
+            <img
+              src="src/assets/images/Shop2.png"
+              alt="Pet Shop Offer"
+              className="w-full h-auto object-contain"
+            />
+            <img
+              src="src/assets/images/Shop3.png"
+              alt="Cat Food Offer"
+              className="w-full h-auto object-contain"
+            />
+          </div>
+        </div>
       </section>
+
+
 
       {/* Offer Products */}
       <section className="px-6 py-4">
