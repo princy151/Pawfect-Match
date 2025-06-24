@@ -26,54 +26,54 @@ const router = createBrowserRouter([
 
   {
     path: '/',
-    element: < LandingPage/>,
+    element: < LandingPage />,
   },
 
 
   // Adopter Routes
   {
     path: '/adopterhome',
-    element: < AHomePage/>,
+    element: < AHomePage />,
   },
   {
     path: '/adopteraboutus',
-    element: < AboutUsPage/>,
+    element: < AboutUsPage />,
   },
   {
-    path: '/adoptionform',
-    element: < AdoptionForm/>,
+    path: '/adopterform',
+    element: < AdoptionForm />,
   },
   {
     path: '/adopterlogin',
-    element: < ALogin/>,
+    element: < ALogin />,
   },
   {
     path: '/adoptersignup',
-    element: < ARegister/>,
+    element: < ARegister />,
   },
   {
     path: '/adoptershop',
-    element: < AShop/>,
+    element: < AShop />,
   },
   {
     path: '/adopterprofile',
-    element: < ProfilePage/>,
+    element: < ProfilePage />,
   },
   {
     path: '/adoptercart',
-    element: < CartPage/>,
+    element: < CartPage />,
   },
   {
     path: '/adopterpets',
-    element: < PetsPage/>,
+    element: < PetsPage />,
   },
   {
     path: '/adopterpetstwo',
-    element: < ASecondPetPage/>,
+    element: < ASecondPetPage />,
   },
   {
     path: '/adoptermorepets',
-    element: < AMorePets/>,
+    element: < AMorePets />,
   },
 
 
@@ -84,38 +84,38 @@ const router = createBrowserRouter([
   //Shelter Routes
   {
     path: '/shelterhome',
-    element: < ShelterHomePage/>,
+    element: < ShelterHomePage />,
   },
   {
     path: '/sheltershop',
-    element: < ShopPage/>,
+    element: < ShopPage />,
   },
   {
     path: '/shelterpets',
-    element: < PetDetails/>,
+    element: < PetDetails />,
   },
   {
     path: '/shelteraboutus',
-    element: < SAboutUsPage/>,
+    element: < SAboutUsPage />,
   },
   {
     path: '/shelterform',
-    element: < SAdoptionForm/>,
+    element: < SAdoptionForm />,
   },
   {
     path: '/shelterlogin',
-    element: < SLogin/>,
+    element: < SLogin />,
   },
   {
     path: '/sheltersignup',
-    element: < SRegister/>,
+    element: < SRegister />,
   },
 ]);
 
 function App() {
   return (
     <>
-        <RouterProvider router={router} />
+      <RouterProvider router={router} />
 
     </>
   );

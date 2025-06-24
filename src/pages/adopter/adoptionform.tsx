@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Navbar from '../../assets/common/navbar';
 
 const AdoptionForm: React.FC = () => {
   const [showPetsDropdown, setShowPetsDropdown] = useState(false);
@@ -6,44 +7,7 @@ const AdoptionForm: React.FC = () => {
 
   return (
     <div className="bg-white font-sans text-lg text-[#333]">
-      {/* Navbar */}
-      <nav className="flex justify-between items-center px-6 md:px-16 lg:px-32 mb-10">
-        <h1 className="font-bold text-xl flex items-center gap-2">
-          <span role="img" aria-label="paw">🐾</span> Pawfect Match
-        </h1>
-        <ul className="flex items-center gap-6 text-gray-700 relative">
-          <li className="cursor-pointer">Home</li>
-          <li
-            onMouseEnter={() => setShowPetsDropdown(true)}
-            onMouseLeave={() => setShowPetsDropdown(false)}
-            className="relative cursor-pointer"
-          >
-            Pets ▾
-            {showPetsDropdown && (
-              <ul className="absolute bg-white shadow-md rounded text-sm z-10 mt-2 w-40">
-                <li className="px-4 py-2 hover:bg-gray-100">Dog</li>
-                <li className="px-4 py-2 hover:bg-gray-100">Cat</li>
-                <li className="px-4 py-2 hover:bg-gray-100">Rabbits</li>
-                <li className="px-4 py-2 hover:bg-gray-100">Your Favourites</li>
-              </ul>
-            )}
-          </li>
-          <li
-            onMouseEnter={() => setShowShopDropdown(true)}
-            onMouseLeave={() => setShowShopDropdown(false)}
-            className="relative cursor-pointer"
-          >
-            Shop ▾
-            {showShopDropdown && (
-              <ul className="absolute bg-white shadow-md rounded text-sm z-10 mt-2 w-40">
-                <li className="px-4 py-2 hover:bg-gray-100">Shop Products</li>
-                <li className="px-4 py-2 hover:bg-gray-100 text-[#B95D2B] font-semibold">My Cart</li>
-              </ul>
-            )}
-          </li>
-          <li className="cursor-pointer">About us</li>
-        </ul>
-      </nav>
+      <Navbar />
 
       {/* Header Image */}
       <div className="w-full">
@@ -140,57 +104,57 @@ const AdoptionForm: React.FC = () => {
         </div>
 
         {/* Appointment Date */}
-<section className="border-[1.5px] border-[#A7522A] bg-[#FFFDFB] p-6 mb-12 shadow-sm">
-  <h3 className="text-xl font-bold mb-4 border-b border-[#A7522A] pb-2">Appointment Date</h3>
-  
-  <div className="grid grid-cols-1 gap-5 mt-6 mb-4">
-    
-    {/* Date Row */}
-    <div className="flex flex-col md:flex-row md:items-center md:gap-6">
-      <label className="w-[160px] font-medium mb-1 md:mb-0">Date Selection:</label>
-      <span className="text-gray-600 mb-1 md:mb-0">DD/MM/YYYY</span>
-      <div className="flex items-center border border-[#A7522A] rounded bg-white px-3 py-[6px] w-[180px] md:ml-10">
-        <input
-          type="text"
-          className="flex-1 outline-none bg-transparent"
-          placeholder=""
-        />
-        <img
-          src="src/assets/images/FormCalender.png"
-          alt="Calendar"
-          className="w-5 h-5 ml-2"
-        />
-      </div>
-    </div>
+        <section className="border-[1.5px] border-[#A7522A] bg-[#FFFDFB] p-6 mb-12 shadow-sm">
+          <h3 className="text-xl font-bold mb-4 border-b border-[#A7522A] pb-2">Appointment Date</h3>
 
-    {/* Time Row */}
-<div className="flex flex-col md:flex-row md:items-center md:gap-6">
-  <label className="w-[160px] font-medium mb-1 md:mb-0">Preferred time:</label>
-  <span className="text-gray-600 mb-1 md:mb-0">hrs : mins</span>
-  <div className="flex items-center border border-[#A7522A] rounded bg-white px-3 py-[6px] w-[180px] md:ml-10">
-    <input
-      type="text"
-      className="outline-none bg-transparent w-[30px] text-center"
-      maxLength={2}
-      placeholder="HH"
-    />
-    <span className="mx-1 font-semibold text-[#A7522A]">:</span>
-    <input
-      type="text"
-      className="outline-none bg-transparent w-[30px] text-center"
-      maxLength={2}
-      placeholder="MM"
-    />
-  </div>
-  <img
-      src="src/assets/images/FormClock.png"
-      alt="Clock"
-      className="w-5 h-5 ml-3"
-    />
-</div>
+          <div className="grid grid-cols-1 gap-5 mt-6 mb-4">
 
-  </div>
-</section>
+            {/* Date Row */}
+            <div className="flex flex-col md:flex-row md:items-center md:gap-6">
+              <label className="w-[160px] font-medium mb-1 md:mb-0">Date Selection:</label>
+              <span className="text-gray-600 mb-1 md:mb-0">DD/MM/YYYY</span>
+              <div className="flex items-center border border-[#A7522A] rounded bg-white px-3 py-[6px] w-[180px] md:ml-10">
+                <input
+                  type="text"
+                  className="flex-1 outline-none bg-transparent"
+                  placeholder=""
+                />
+                <img
+                  src="src/assets/images/FormCalender.png"
+                  alt="Calendar"
+                  className="w-5 h-5 ml-2"
+                />
+              </div>
+            </div>
+
+            {/* Time Row */}
+            <div className="flex flex-col md:flex-row md:items-center md:gap-6">
+              <label className="w-[160px] font-medium mb-1 md:mb-0">Preferred time:</label>
+              <span className="text-gray-600 mb-1 md:mb-0">hrs : mins</span>
+              <div className="flex items-center border border-[#A7522A] rounded bg-white px-3 py-[6px] w-[180px] md:ml-10">
+                <input
+                  type="text"
+                  className="outline-none bg-transparent w-[30px] text-center"
+                  maxLength={2}
+                  placeholder="HH"
+                />
+                <span className="mx-1 font-semibold text-[#A7522A]">:</span>
+                <input
+                  type="text"
+                  className="outline-none bg-transparent w-[30px] text-center"
+                  maxLength={2}
+                  placeholder="MM"
+                />
+              </div>
+              <img
+                src="src/assets/images/FormClock.png"
+                alt="Clock"
+                className="w-5 h-5 ml-3"
+              />
+            </div>
+
+          </div>
+        </section>
 
 
         {/* Submit Button */}

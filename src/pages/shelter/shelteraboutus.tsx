@@ -6,7 +6,7 @@ const AboutUsPage: React.FC = () => {
   const [showShopDropdown, setShowShopDropdown] = useState(false);
 
   return (
-    <div className="bg-white font-sans px-6">
+    <div className="bg-white font-sans">
       {/* Navbar */}
       <Navbar />
 
@@ -26,51 +26,51 @@ const AboutUsPage: React.FC = () => {
       </div>
 
       {/* About Section - Margined and Styled */}
-<div className="px-6 md:px-20 lg:px-32 font-['Abhaya_Libre_ExtraBold']">
+      <div className="px-6 md:px-20 lg:px-32 font-['Abhaya_Libre_ExtraBold']">
 
-  {/* Quote */}
-  <h3 className="text-left text-4xl font-extrabold mb-10">"Your step, their new beginning."</h3>
+        {/* Quote */}
+        <h3 className="text-left text-4xl font-extrabold mb-10">"Your step, their new beginning."</h3>
 
-  {/* Image Layout Section */}
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-    {/* Left - Full Image */}
-    <div className="h-full">
-      <img
-        src="src/assets/images/AboutUs1.png"
-        alt="About Us 1"
-        className="w-full h-full object-cover"
-      />
-    </div>
+        {/* Image Layout Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          {/* Left - Full Image */}
+          <div className="h-full">
+            <img
+              src="src/assets/images/AboutUs1.png"
+              alt="About Us 1"
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-    {/* Right - Two Stacked Images */}
-    <div className="flex flex-col gap-6 h-full">
-      <img
-        src="src/assets/images/AboutUs2.png"
-        alt="About Us 2"
-        className="w-full h-1/2 object-cover"
-      />
-      <img
-        src="src/assets/images/AboutUs3.png"
-        alt="About Us 3"
-        className="w-full h-1/2 object-cover"
-      />
-    </div>
-  </div>
+          {/* Right - Two Stacked Images */}
+          <div className="flex flex-col gap-6 h-full">
+            <img
+              src="src/assets/images/AboutUs2.png"
+              alt="About Us 2"
+              className="w-full h-1/2 object-cover"
+            />
+            <img
+              src="src/assets/images/AboutUs3.png"
+              alt="About Us 3"
+              className="w-full h-1/2 object-cover"
+            />
+          </div>
+        </div>
 
-  {/* Mission Statement */}
-  <div className="text-black space-y-6 text-justify text-lg">
-    <p>
-      At Pawfect Match, we believe that every pet deserves a loving home and every person deserves a loyal companion. Our platform is dedicated to connecting potential pet parents with animals in need of adoption through a seamless, secure, and friendly process. Whether you're looking for a playful puppy, a calm kitten, or a senior pet that needs a second chance, Pawfect Match helps you find your perfect furry friend.
-    </p>
-    <p>
-      We work closely with trusted shelters and rescue organizations to ensure all pets listed are healthy.
-      Our goal is to make adoption safe, easy, and to become part of a loving family. With features like personalized matches, adoption resources, and community support, we help make the journey smoother.
-    </p>
-    <p>
-      Join us in creating countless happily ever-afters—one paw at a time.
-    </p>
-  </div>
-</div>
+        {/* Mission Statement */}
+        <div className="text-black space-y-6 text-justify text-lg">
+          <p>
+            At Pawfect Match, we believe that every pet deserves a loving home and every person deserves a loyal companion. Our platform is dedicated to connecting potential pet parents with animals in need of adoption through a seamless, secure, and friendly process. Whether you're looking for a playful puppy, a calm kitten, or a senior pet that needs a second chance, Pawfect Match helps you find your perfect furry friend.
+          </p>
+          <p>
+            We work closely with trusted shelters and rescue organizations to ensure all pets listed are healthy.
+            Our goal is to make adoption safe, easy, and to become part of a loving family. With features like personalized matches, adoption resources, and community support, we help make the journey smoother.
+          </p>
+          <p>
+            Join us in creating countless happily ever-afters—one paw at a time.
+          </p>
+        </div>
+      </div>
 
 
       {/* Footer */}

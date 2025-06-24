@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
       <ul className="flex gap-8 items-center text-black font-medium relative">
         {/* Home Button */}
         <li>
-          <button className="bg-[#B95D2B] text-white px-6 py-2 rounded-full shadow-md font-semibold">
+          <button className="bg-[#B95D2B] text-[#E7DAD1] px-6 py-2 rounded-full shadow-md font-semibold">
             Home
           </button>
         </li>

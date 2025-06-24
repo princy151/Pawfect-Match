@@ -3,6 +3,12 @@ import React from 'react';
 const ARegister: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#fefefe] px-4">
+      {/* Background Image Behind Content */}
+      <img
+        src="src/assets/images/emptybg.png"
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover opacity-10 z-0"
+      />
       <div className="bg-[#FFFDFB] border border-[#b2581c] rounded-[2rem] shadow-md p-6 md:p-12 w-full max-w-7xl relative overflow-hidden">
         {/* Title */}
         <h2 className="text-3xl md:text-4xl font-extrabold text-[#a3491c] mb-8">
@@ -14,7 +20,7 @@ const ARegister: React.FC = () => {
           {/* First Name */}
           <div>
             <label className="block text-xs font-extrabold uppercase mb-1 tracking-wider">First Name</label>
-            <input 
+            <input
               type="text"
               className="bg-white w-full border border-gray-300 px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
               placeholder="Enter first name"
@@ -58,13 +64,13 @@ const ARegister: React.FC = () => {
               </div>
             </div>
 
-            {/* Password */}
+            {/* Email */}
             <div className="flex-1">
-              <label className="block text-xs font-bold uppercase mb-1 tracking-wider">Password</label>
+              <label className="block text-xs font-bold uppercase mb-1 tracking-wider">Email</label>
               <input
-                type="password"
+                type="email"
                 className="bg-white w-full border border-gray-300 px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
-                placeholder="Enter password"
+                placeholder="Enter email address"
               />
             </div>
           </div>
@@ -79,13 +85,13 @@ const ARegister: React.FC = () => {
             />
           </div>
 
-          {/* Email */}
+          {/* Password */}
           <div>
-            <label className="block text-xs font-bold uppercase mb-1 tracking-wider">Email</label>
+            <label className="block text-xs font-bold uppercase mb-1 tracking-wider">Password</label>
             <input
-              type="email"
+              type="password"
               className="bg-white w-full border border-gray-300 px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
-              placeholder="Enter email address"
+              placeholder="Enter password"
             />
           </div>
 

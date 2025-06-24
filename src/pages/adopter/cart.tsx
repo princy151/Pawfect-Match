@@ -11,6 +11,7 @@ const CartPage: React.FC = () => {
         alt="Background"
         className="absolute inset-0 w-full h-full object-cover opacity-10 z-0"
       />
+      
       <div className="relative z-10">
         <Navbar />
 
@@ -75,7 +76,7 @@ const CartPage: React.FC = () => {
             </div>
 
 
-            <button className="w-20 bg-[#A7522A] ml-45 text-white py-2 rounded-2xl font-bold tracking-wide hover:bg-[#843e1c] transition">
+            <button className="w-20 bg-[#A7522A] ml-45 text-[#E7DAD1] py-2 rounded-2xl font-extrabold tracking-wide hover:bg-[#843e1c] transition">
               DONE
             </button>
           </div>
