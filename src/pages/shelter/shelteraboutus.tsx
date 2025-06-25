@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../../assets/common/navbar';
+import SNavbar from '../../assets/common/snavbar';
 
 const AboutUsPage: React.FC = () => {
   const [showPetsDropdown, setShowPetsDropdown] = useState(false);
@@ -8,7 +8,7 @@ const AboutUsPage: React.FC = () => {
   return (
     <div className="bg-white font-sans">
       {/* Navbar */}
-      <Navbar />
+      <SNavbar />
 
       {/* Hero Section with Image and Text Overlay */}
       <div className="relative mb-16">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../../assets/common/navbar';
+import SNavbar from '../../assets/common/snavbar';
 
 const SAdoptionForm: React.FC = () => {
   const [showPetsDropdown, setShowPetsDropdown] = useState(false);
@@ -8,7 +8,7 @@ const SAdoptionForm: React.FC = () => {
   return (
     <div className="bg-white font-sans text-lg text-[#333]">
       {/* Navbar */}
-      <Navbar />
+      <SNavbar />
 
       {/* Header Image */}
       <div className="w-full">

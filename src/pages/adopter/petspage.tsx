@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../../assets/common/navbar';
-import { DogCard } from '../../assets/common/card'; // adjust the path if needed
+import { DogCard } from '../../assets/common/card';
 
 const pets = [
   { id: 1, name: 'Laila', age: 2, imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
@@ -12,12 +12,14 @@ const pets = [
 ];
 
 const PetsPage: React.FC = () => {
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+
   return (
     <div className="relative w-full min-h-screen bg-white overflow-hidden">
       <Navbar />
 
       {/* Background Image */}
-      <div className="absolute inset-0 z-10">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <img
           src="src/assets/images/PetsPageMain.png"
           alt="Woman and Dog"
@@ -28,11 +30,11 @@ const PetsPage: React.FC = () => {
       {/* Foreground Content */}
       <div className="relative z-20 flex flex-col lg:flex-row justify-between px-8 lg:px-16 py-16 gap-10">
         {/* Left Text Content */}
-        <div className="lg:w-1/2 text-black">
-          <h1 className="text-5xl font-bold leading-tight mb-6">
+        <div className="lg:w-1/2 text-black ml-10">
+          <h1 className="text-7xl font-bold leading-tight mb-6 font-[Abhaya_Libre]">
             EVERY PET <br /> DESERVES A <br /> HOME
           </h1>
-          <p className="text-lg text-gray-800 max-w-lg">
+          <p className="text-xl text-gray-800 max-w-lg text-justify">
             Bringing a pet into your life is more than just an adoption—it’s the beginning
             of a beautiful bond built on trust, love, and companionship. Every animal deserves
             a second chance, and every home has the power to offer it. At Pawfect Match, we believe
@@ -43,20 +45,27 @@ const PetsPage: React.FC = () => {
 
         {/* Right Dog Cards */}
         <div>
-          <h2 className="text-lg font-semibold text-center mb-4">Pets available for Adoption</h2>
-          {/* Use grid for cards */}
+          <h2 className="text-3xl font-semibold text-gray-600 bg-neutral-50 rounded-xl px-6 py-3 shadow-lg text-center font-[Abhaya_Libre] w-full mx-auto mb-6">
+            Pets available for Adoption
+          </h2>
           <div className="grid grid-cols-2 grid-rows-3 gap-4">
             {pets.map((pet) => (
-              <DogCard
+              <div
                 key={pet.id}
-                name={pet.name}
-                age={pet.age}
-                imageUrl={pet.imageUrl}
-              
-              />
+                onMouseEnter={() => setHoveredId(pet.id)}
+                onMouseLeave={() => setHoveredId(null)}
+              >
+                <DogCard
+                  name={pet.name}
+                  age={pet.age}
+                  imageUrl={pet.imageUrl}
+                  selected={hoveredId === pet.id}
+                />
+              </div>
             ))}
           </div>
-          <button className="text-sm mt-4 text-gray-600 hover:underline w-full text-center">more →</button>
+
+          <button className="ml-120 text-sm mt-4 px-5 py-2 rounded-full bg-white text-gray-600 hover:underline w-fit text-center shadow-md">more →</button>
         </div>
       </div>
     </div>

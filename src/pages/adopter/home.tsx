@@ -6,7 +6,7 @@ const AHomePage: React.FC = () => {
   const [showShopDropdown, setShowShopDropdown] = useState(false);
 
   return (
-    <div className="bg-white min-h-screen font-sans px-8">
+    <div className="bg-white min-h-screen font-sans ">
     <Navbar />
 
       {/* Main Section */}

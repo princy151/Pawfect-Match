@@ -1,129 +1,140 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { DogCard } from "../../assets/common/card";
+import SNavbar from "../../assets/common/snavbar";
 
-type Pet = {
+interface Pet {
   name: string;
-  gender: '♂️' | '♀️';
-  image: string;
+  age: number;
+  imageUrl: string;
+  breed?: string;
+  gender?: string;
+  likes?: string;
+  dislikes?: string;
+  description?: string;
+  selected?: boolean;
+}
+
+const initialPets: Record<string, Pet[]> = {
+  Dogs: [
+    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+  ],
+  Cats: [
+    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Lula", age: 3, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+  ],
+  Rabbits: [
+    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+  ],
 };
 
-const allPets: Record<'dogs' | 'cats' | 'rabbits', Pet[]> = {
-  dogs: [
-    { name: 'Lulu', gender: '♀️', image: 'https://via.placeholder.com/120' },
-    { name: 'Bitsy', gender: '♂️', image: 'https://via.placeholder.com/120' },
-  ],
-  cats: [
-    { name: 'Whiskers', gender: '♂️', image: 'https://via.placeholder.com/120' },
-    { name: 'Luna', gender: '♀️', image: 'https://via.placeholder.com/120' },
-  ],
-  rabbits: [
-    { name: 'Coco', gender: '♀️', image: 'https://via.placeholder.com/120' },
-    { name: 'Bunny', gender: '♂️', image: 'https://via.placeholder.com/120' },
-  ],
-};
+const PetDetails: React.FC = () => {
+  const [pets, setPets] = useState(initialPets);
+  const [formData, setFormData] = useState({
+    name: "",
+    age: "",
+    breed: "",
+    gender: "",
+    likes: "",
+    dislikes: "",
+    description: "",
+    photo: "",
+  });
 
-const PetDetails = () => {
-  const [speciesFilter, setSpeciesFilter] = useState<'All' | 'dogs' | 'cats' | 'rabbits'>('All');
-  const [genderFilter, setGenderFilter] = useState<'All' | '♂️' | '♀️'>('All');
-
-  const filterPets = () => {
-    const speciesKeys = speciesFilter === 'All' ? Object.keys(allPets) : [speciesFilter];
-    const results: Record<string, Pet[]> = {};
-
-    for (const species of speciesKeys) {
-      results[species] = allPets[species as keyof typeof allPets].filter((pet) =>
-        genderFilter === 'All' ? true : pet.gender === genderFilter
-      );
-    }
-
-    return results;
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const filteredPets = filterPets();
+  const handleRemove = (category: keyof typeof pets, index: number) => {
+    const updated = [...pets[category]];
+    updated.splice(index, 1);
+    setPets({ ...pets, [category]: updated });
+  };
+
+  const handleEdit = (pet: Pet) => {
+    setFormData({
+      name: pet.name || "",
+      age: pet.age.toString() || "",
+      breed: pet.breed || "",
+      gender: pet.gender || "",
+      likes: pet.likes || "",
+      dislikes: pet.dislikes || "",
+      description: pet.description || "",
+      photo: pet.imageUrl || "",
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
-      {/* Top Navbar */}
-      <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-        <div className="text-lg font-bold">
-          <span className="text-black">🐾 Pawfect Match</span>
-        </div>
-        <nav className="space-x-6 text-sm text-gray-700">
-          <a href="#" className="hover:text-orange-500">Home</a>
-          <a href="#" className="hover:text-orange-500 font-semibold bg-orange-200 px-3 py-1 rounded">My Pets</a>
-          <a href="#" className="hover:text-orange-500">Shop</a>
-          <a href="#" className="hover:text-orange-500">About us</a>
-        </nav>
-      </header>
+    <div className="relative mx-auto font-serif">
+      {/* Header */}
+      <SNavbar />
+      <div
+        className="absolute inset-0 w-full h-full bg-[url('/src/assets/images/emptybg.png')] bg-repeat opacity-10 pointer-events-none"
+      />
 
-      {/* Back Button */}
-      <div className="p-4">
-        <button className="text-2xl hover:text-orange-500">←</button>
-      </div>
+      {/* Back arrow */}
+      <div className="text-2xl mb-4">←</div>
 
       {/* Pet Details Form */}
-      <section className="px-6">
-        <div className="border p-4 rounded-md bg-white shadow-sm mb-6">
-          <h2 className="text-xl font-semibold mb-4">Pet details</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <input type="text" placeholder="Name" className="border px-3 py-2 rounded" />
-            <div className="border px-3 py-8 rounded text-center">Add Photo</div>
-            <input type="text" placeholder="Age" className="border px-3 py-2 rounded" />
-            <textarea placeholder="Description" className="border px-3 py-2 rounded h-24" />
-            <input type="text" placeholder="Likes" className="border px-3 py-2 rounded" />
-            <input type="text" placeholder="Dislikes" className="border px-3 py-2 rounded" />
+      <div className="border border-[#A0522D] rounded-xl p-6 ml-60 mr-60 mb-20">
+        <h2 className="text-xl font-semibold mb-4">Pet details</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-3">
+            <input name="name" value={formData.name} onChange={handleInputChange} placeholder="Name" className="w-full border p-2 rounded" />
+            <input name="age" value={formData.age} onChange={handleInputChange} placeholder="Age" className="w-full border p-2 rounded" />
+            <input name="breed" value={formData.breed} onChange={handleInputChange} placeholder="Breed" className="w-full border p-2 rounded" />
+            <select name="gender" value={formData.gender} onChange={handleInputChange} className="w-full border p-2 rounded text-gray-700">
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <input name="likes" value={formData.likes} onChange={handleInputChange} placeholder="Likes" className="w-full border p-2 rounded" />
+            <input name="dislikes" value={formData.dislikes} onChange={handleInputChange} placeholder="Dislikes" className="w-full border p-2 rounded" />
           </div>
-          <button className="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600">Add/Update</button>
+          <div className="space-y-3 flex flex-col justify-between">
+            <div className="flex-1 flex items-center justify-center border border-gray-300 rounded bg-gray-50 text-gray-500 text-sm">
+              Add Photo
+            </div>
+            <textarea name="description" value={formData.description} onChange={handleInputChange} placeholder="Description" className="w-full h-24 border p-2 rounded" />
+          </div>
         </div>
-      </section>
-
-      {/* Filters */}
-      <section className="px-6 mb-6">
-        <h2 className="text-lg font-semibold mb-2">Available pets for adoption</h2>
-        <div className="flex flex-wrap gap-4 mb-6">
-          <select
-            value={speciesFilter}
-            onChange={(e) => setSpeciesFilter(e.target.value as any)}
-            className="border px-3 py-2 rounded"
-          >
-            <option value="All">All Species</option>
-            <option value="dogs">Dogs</option>
-            <option value="cats">Cats</option>
-            <option value="rabbits">Rabbits</option>
-          </select>
-          <select
-            value={genderFilter}
-            onChange={(e) => setGenderFilter(e.target.value as any)}
-            className="border px-3 py-2 rounded"
-          >
-            <option value="All">All Genders</option>
-            <option value="♀️">Female ♀️</option>
-            <option value="♂️">Male ♂️</option>
-          </select>
+        <div className="text-center mt-6">
+          <button className="bg-[#A0522D] text-white px-6 py-2 rounded-full">
+            Add/Update
+          </button>
         </div>
-      </section>
+      </div>
 
       {/* Pet Cards */}
-      <section className="px-6 pb-10">
-        {Object.entries(filteredPets).map(([species, pets]) => (
-          <div key={species} className="mb-6">
-            <h3 className="text-md font-semibold capitalize mb-2">{species}</h3>
-            {pets.length === 0 ? (
-              <p className="text-gray-500 italic">No pets found.</p>
-            ) : (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {pets.map((pet, i) => (
-                  <div key={i} className="border rounded-md p-2 text-center shadow-sm bg-white">
-                    <img src={pet.image} alt={pet.name} className="mx-auto mb-2 rounded-md" />
-                    <p className="font-medium">
-                      {pet.name} <span className="text-red-500">{pet.gender}</span>
-                    </p>
-                  </div>
-                ))}
+      <h2 className="text-xl font-semibold text-center  mb-6">Available pets for adoption</h2>
+
+      {Object.entries(pets).map(([category, petList]) => (
+        <div key={category} className="ml-30 mb-10">
+          <h3 className="text-lg font-bold mb-4">{category}</h3>
+          <div className="flex flex-wrap gap-4">
+            {petList.map((pet, index) => (
+              <div className="relative" key={index}>
+                {/* Remove */}
+                <button onClick={() => handleRemove(category as keyof typeof pets, index)} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs z-10">✕</button>
+                {/* Edit */}
+                <button onClick={() => handleEdit(pet)} className="absolute -top-2 left-2 bg-yellow-400 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs z-10">✎</button>
+                <DogCard {...pet} />
               </div>
-            )}
+            ))}
           </div>
-        ))}
-      </section>
+        </div>
+      ))}
     </div>
   );
 };

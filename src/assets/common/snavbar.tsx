@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const Navbar: React.FC = () => {
+const SNavbar: React.FC = () => {
   const [showPets, setShowPets] = useState(false);
   const [showShop, setShowShop] = useState(false);
 
@@ -58,9 +58,9 @@ const Navbar: React.FC = () => {
         {/* Home Button */}
         <li>
           <button
-            onClick={() => navigate('/adopterhome')}
+            onClick={() => navigate('/shelterhome')}
             className={`px-6 py-2 rounded-full font-semibold transition ${
-              isActive('/adopterhome')
+              isActive('/shelterhome')
                 ? 'bg-[#B95D2B] text-[#E7DAD1] shadow-md'
                 : 'bg-transparent text-black hover:text-[#B95D2B]'
             }`}
@@ -70,99 +70,39 @@ const Navbar: React.FC = () => {
         </li>
 
         {/* Pets Dropdown */}
-        <li
-          className="relative"
-          onMouseEnter={handlePetsMouseEnter}
-          onMouseLeave={handlePetsMouseLeave}
-        >
+        <li>
           <button
-            onClick={() => navigate('/adopterpets')}
+            onClick={() => navigate('/shelterpets')}
             className={`px-6 py-2 rounded-full font-semibold transition ${
-              isActive('/adopterpets')
+              isActive('/shelterpets')
                 ? 'bg-[#B95D2B] text-[#E7DAD1] shadow-md'
                 : 'bg-transparent text-black hover:text-[#B95D2B]'
             }`}
           >
-            Pets ▾
+            Pets
           </button>
-          {showPets && (
-            <ul
-              className="absolute top-full left-0 mt-2 w-40 bg-white shadow-lg rounded text-sm z-10"
-              onMouseEnter={handlePetsMouseEnter}
-              onMouseLeave={handlePetsMouseLeave}
-            >
-              <li
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => navigate('/adoptermorepets')}
-              >
-                Dogs
-              </li>
-              <li
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => navigate('/adoptermorepets')}
-              >
-                Cats
-              </li>
-              <li
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => navigate('/adoptermorepets')}
-              >
-                Rabbits
-              </li>
-              <li
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => navigate('/adopterfav')}
-              >
-                Favorites
-              </li>
-            </ul>
-          )}
         </li>
 
         {/* Shop Dropdown */}
-        <li
-          className="relative"
-          onMouseEnter={handleShopMouseEnter}
-          onMouseLeave={handleShopMouseLeave}
-        >
+        <li>
           <button
+            onClick={() => navigate('/sheltershop')}
             className={`px-6 py-2 rounded-full font-semibold transition ${
-              location.pathname.startsWith('/adoptershop') ||
-              location.pathname.startsWith('/adoptercart')
+              isActive('/sheltershop')
                 ? 'bg-[#B95D2B] text-[#E7DAD1] shadow-md'
                 : 'bg-transparent text-black hover:text-[#B95D2B]'
             }`}
           >
-            Shop ▾
+            Shop
           </button>
-          {showShop && (
-            <ul
-              className="absolute top-full left-0 mt-2 w-40 bg-white shadow-lg rounded text-sm z-10"
-              onMouseEnter={handleShopMouseEnter}
-              onMouseLeave={handleShopMouseLeave}
-            >
-              <li
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => navigate('/adoptershop')}
-              >
-                Products
-              </li>
-              <li
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => navigate('/adoptercart')}
-              >
-                My Cart
-              </li>
-            </ul>
-          )}
         </li>
 
         {/* About Us */}
         <li>
           <button
-            onClick={() => navigate('/adopteraboutus')}
+            onClick={() => navigate('/shelteraboutus')}
             className={`px-6 py-2 rounded-full font-semibold transition ${
-              isActive('/adopteraboutus')
+              isActive('/shelteraboutus')
                 ? 'bg-[#B95D2B] text-[#E7DAD1] shadow-md'
                 : 'bg-transparent text-black hover:text-[#B95D2B]'
             }`}
@@ -175,4 +115,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar;
+export default SNavbar;

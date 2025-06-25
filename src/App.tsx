@@ -21,6 +21,7 @@ import APetsPage from './pages/adopter/petspage';
 import PetsPage from './pages/adopter/petspage';
 import ASecondPetPage from './pages/adopter/petsdata';
 import AMorePets from './pages/adopter/morepets';
+import FavoritePetsPage from './pages/adopter/favourite';
 
 const router = createBrowserRouter([
 
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
   {
     path: '/adoptermorepets',
     element: < AMorePets />,
+  },
+  {
+    path: '/adopterfav',
+    element: < FavoritePetsPage />,
   },
 
 

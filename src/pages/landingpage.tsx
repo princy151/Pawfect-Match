@@ -6,7 +6,7 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-white px-4 py-10 font-[Besley]" >
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto mt-10">
         {/* Adopter Card */}
         <div className="bg-[#FFFDFA] border border-[#A7522A] p-6 rounded-lg shadow-md">
@@ -21,7 +21,7 @@ const LandingPage = () => {
           <div className="text-center mt-6">
             <button
               onClick={() => navigate('/adopterlogin')}
-              className="text-[#A7522A] font-bold text-lg md:text-xl font-bowlby tracking-wide hover:text-orange-600 transition"
+              className="text-[#A7522A] font-bold text-lg md:text-xl font-bowlby tracking-wide hover:text-[#803F21] transition"
             >
               I AM A ADOPTER
             </button>
@@ -41,7 +41,7 @@ const LandingPage = () => {
           <div className="text-center mt-6">
             <button
               onClick={() => navigate('/shelterlogin')}
-              className="text-[#A7522A] font-bold text-lg md:text-xl font-bowlby tracking-wide hover:text-orange-600 transition"
+              className="text-[#A7522A] font-bold text-lg md:text-xl font-bowlby tracking-wide hover:text-[#803F21] transition"
             >
               I AM A SHELTER
             </button>

@@ -1,98 +1,80 @@
-import React, { useState } from 'react';
+import React from "react";
+import { DogCard } from "../../assets/common/card";
+import Navbar from "../../assets/common/navbar";
+import { useNavigate } from "react-router-dom";
 
-type Pet = {
-  name: string;
-  gender: '♂️' | '♀️';
-  image: string;
-};
-
-const petData: Record<'Dogs' | 'Cats' | 'Rabbits', Pet[]> = {
+const pets = {
   Dogs: [
-    { name: 'Lula', gender: '♀️', image: 'https://via.placeholder.com/150/98f/000?text=Lula' },
-    { name: 'Bitty', gender: '♂️', image: 'https://via.placeholder.com/150/ff9/000?text=Bitty' },
-    { name: 'Lula', gender: '♀️', image: 'https://via.placeholder.com/150/f98/000?text=Lula' },
-    { name: 'Bitty', gender: '♂️', image: 'https://via.placeholder.com/150/9ff/000?text=Bitty' },
+    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee", selected: true },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
   ],
   Cats: [
-    { name: 'Lula', gender: '♀️', image: 'https://via.placeholder.com/150/abc/000?text=Lula' },
-    { name: 'Bitty', gender: '♂️', image: 'https://via.placeholder.com/150/cab/000?text=Bitty' },
-    { name: 'Lula', gender: '♀️', image: 'https://via.placeholder.com/150/fff/000?text=Lula' },
-    { name: 'Bitty', gender: '♂️', image: 'https://via.placeholder.com/150/bcf/000?text=Bitty' },
+    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee", selected: true },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Lula", age: 3, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
   ],
   Rabbits: [
-    { name: 'Lula', gender: '♀️', image: 'https://via.placeholder.com/150/888/fff?text=Lula' },
-    { name: 'Bitty', gender: '♂️', image: 'https://via.placeholder.com/150/aaa/fff?text=Bitty' },
-    { name: 'Lula', gender: '♀️', image: 'https://via.placeholder.com/150/ddd/fff?text=Lula' },
-    { name: 'Bitty', gender: '♂️', image: 'https://via.placeholder.com/150/ccc/fff?text=Bitty' },
+    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee", selected: true },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
+    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
   ],
 };
 
-const ASecondPetPage = () => {
-  const [favorites, setFavorites] = useState<string[]>([]);
-
-  const toggleFavorite = (name: string) => {
-    setFavorites((prev) =>
-      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name]
-    );
-  };
+const ASecondPetPage: React.FC = () => {
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#f9f9f9] font-serif px-6 py-4">
-      {/* Navbar */}
-      <header className="flex justify-between items-center mb-6">
-        <div className="text-2xl font-bold">🐾 Pawfect Match</div>
-        <nav className="flex gap-8 items-center text-lg">
-          <a href="#">Home</a>
-          <button className="bg-[#a3562c] text-white px-5 py-1 rounded-full shadow-md">Pets</button>
-          <div className="relative">
-            <button>Shop ▾</button>
-            {/* Optional dropdown */}
-          </div>
-          <a href="#">About us</a>
-          <div className="text-center ml-4">
-            <div className="text-pink-500 text-3xl">❤️</div>
-            <div className="text-xs text-gray-600 -mt-2">Click to see your<br />favourites</div>
-          </div>
-        </nav>
-      </header>
+    <div className="relative mx-auto font-serif">
+      {/* Header */}
+      <Navbar />
+
+      {/* Favorite Heart Button top right */}
+      <div className="fixed top-25 right-6 z-50">
+        <button
+          onClick={() => navigate('/adopterfav')}
+          aria-label="Go to Favorites"
+          className="text-[#A7522A] text-3xl hover:text-orange-600 transition focus:outline-none"
+          title="Go to Favorites"
+        >
+          ❤️
+        </button>
+      </div>
+
+      <div
+        className="absolute inset-0 w-full h-full bg-[url('/src/assets/images/emptybg.png')] bg-repeat opacity-10 pointer-events-none"
+      />
 
       {/* Title */}
-      <h2 className="text-2xl font-semibold text-center mb-10">Choose your desired category</h2>
+      <h2 className="text-2xl text-center font-semibold mb-8">
+        Choose your desired category
+      </h2>
 
-      {/* Pet Sections */}
-      {Object.entries(petData).map(([category, pets]) => (
-        <section key={category} className="mb-8">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-xl font-semibold">{category}</h3>
-            <button className="text-sm px-4 py-1 rounded-full border border-gray-300 hover:bg-gray-100">
+      {/* Category Sections */}
+      {Object.entries(pets).map(([category, items]) => (
+        <div key={category} className="mb-12 ml-45">
+          <div className="flex justify-between mb-5 pr-40">
+            <h3 className="text-xl font-bold mb-4">{category}</h3>
+
+            <button className="text-sm bg-white border px-4 py-2 rounded-full hover:bg-gray-100">
               more →
             </button>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {pets.map((pet, index) => {
-              const isFav = favorites.includes(`${category}-${index}`);
-              return (
-                <div key={index} className="relative bg-white shadow-md rounded-xl p-2 text-center">
-                  <img
-                    src={pet.image}
-                    alt={pet.name}
-                    className="rounded-lg h-32 w-full object-cover mb-2"
-                  />
-                  <div className="font-semibold text-sm">{pet.name}</div>
-                  <div className="text-xs text-gray-500">{pet.gender}</div>
-                  <button
-                    onClick={() => toggleFavorite(`${category}-${index}`)}
-                    className={`absolute top-2 right-2 text-xl transition-all duration-200 ${
-                      isFav ? 'text-red-500' : 'text-gray-400'
-                    }`}
-                  >
-                    {isFav ? '❤️' : '♡'}
-                  </button>
-                </div>
-              );
-            })}
+          <div className="flex flex-wrap gap-6">
+            {items.map((pet, index) => (
+              <DogCard
+                key={index}
+                name={pet.name}
+                age={pet.age}
+                imageUrl={pet.imageUrl}
+                selected={true}
+              />
+            ))}
           </div>
-        </section>
+        </div>
       ))}
     </div>
   );
