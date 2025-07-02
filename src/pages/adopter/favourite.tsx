@@ -24,9 +24,15 @@ const FavoritePetsPage: React.FC = () => {
         <div className="relative min-h-screen bg-[#f9f9f9] font-serif">
             <Navbar />
 
-            <div className="text-center my-4  py-10">
-                <h2 className="text-2xl font-bold text-[#A7522A]">Your Favorite Pets</h2>
-                <p className="text-gray-600 mt-1">All pets you've favorited are listed below</p>
+            {/* 🔙 Back Button with Heading */}
+            <div className="flex items-center gap-4 px-20 mt-6">
+                <img
+                    src="src/assets/images/favback.png"
+                    alt="Back"
+                    className="w-10 h-10 cursor-pointer hover:opacity-80"
+                    onClick={() => window.history.back()}
+                />
+                <h2 className="text-2xl font-bold text-[#A7522A] font-serif">Your Favourite Pets</h2>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-8 mt-8 px-20">
@@ -71,7 +77,7 @@ const FavoritePetsPage: React.FC = () => {
                             <p><strong>Description:</strong> A loving companion looking for a forever home.</p>
                         </div>
                         <div className="mt-6 text-right">
-                            <button className="bg-[#A7522A] text-white px-5 py-2 font-bowlby rounded-2xl hover:bg-orange-700 transition">
+                            <button className="bg-[#A7522A] text-[#E7DAD1] px-5 py-2 font-bowlby rounded-2xl hover:bg-[#934622] transition">
                                 View Adoption Form
                             </button>
                         </div>

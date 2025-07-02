@@ -9,7 +9,6 @@ const SLogin: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  // ✅ Forget password states
   const [showForgetPassword, setShowForgetPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const [resetMessage, setResetMessage] = useState('');
@@ -22,7 +21,7 @@ const SLogin: React.FC = () => {
         password,
       });
       console.log('Shelter Login Success:', response.data);
-      navigate('/shelter-dashboard');
+      navigate('/shelterhome');
     } catch (error: any) {
       console.error('Login failed:', error.response?.data || error.message);
       setErrorMsg(error.response?.data?.message || 'Login failed');
@@ -32,12 +31,13 @@ const SLogin: React.FC = () => {
   const handleForgetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/api/v1/shelter/forgot-password', {
+      const response = await axios.post('http://localhost:3000/api/v1/shelter/forgotpassword', {
         email: resetEmail,
       });
-      setResetMessage('Password reset link sent! Please check your email.');
+      setResetMessage('✅ Password reset link sent! Please check your email or console.');
+      console.log('🔗 Reset link:', response.data.resetUrl);
     } catch (error: any) {
-      setResetMessage(error.response?.data?.message || 'Failed to send reset link.');
+      setResetMessage(error.response?.data?.message || '❌ Failed to send reset link.');
     }
   };
 
@@ -54,7 +54,7 @@ const SLogin: React.FC = () => {
       {/* 🔒 Forget Password Modal */}
       {showForgetPassword && (
         <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: 'rgba(5, 5, 5, 0.6)' }}>
-          <div className="bg-white rounded-2xl p-8 w-[90%] max-w-md shadow-xl border-2 border-[#A7522A] relative animate-[pop_0.3s_ease-out_forwards]">
+          <div className="bg-white rounded-2xl p-8 w-[90%] max-w-md shadow-xl border-2 border-[#A7522A] relative">
             <button
               onClick={() => {
                 setShowForgetPassword(false);
@@ -119,9 +119,7 @@ const SLogin: React.FC = () => {
             <form onSubmit={handleLogin}>
               <div className="mb-5 relative mt-8">
                 <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16.5 6.75L12 11.25L7.5 6.75M3.75 6.75V17.25H20.25V6.75H3.75Z" />
-                  </svg>
+                  📧
                 </span>
                 <input
                   type="email"
@@ -135,10 +133,7 @@ const SLogin: React.FC = () => {
 
               <div className="mb-10 relative">
                 <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
-                    <rect x="5" y="11" width="14" height="10" rx="2" ry="2" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 11V7a4 4 0 018 0v4" />
-                  </svg>
+                  🔒
                 </span>
                 <input
                   type={showPassword ? 'text' : 'password'}

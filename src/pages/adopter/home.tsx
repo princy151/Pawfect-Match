@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
 import Navbar from '../../assets/common/navbar';
+import profileMan from '../../assets/images/profileman.png'; // 👈 import the image
 
 const AHomePage: React.FC = () => {
   const [showPetsDropdown, setShowPetsDropdown] = useState(false);
   const [showShopDropdown, setShowShopDropdown] = useState(false);
 
   return (
-    <div className="bg-white min-h-screen font-sans ">
-    <Navbar />
+    <div className="bg-white min-h-screen font-sans">
+      <Navbar />
+
+      {/* 👤 Profile Man Icon on Top-Right Below Navbar */}
+      <div className="absolute top-25 right-10 z-50">
+        <img
+          src={profileMan}
+          alt="Profile Man"
+          className="w-10 h-10 object-cover rounded-full"
+        />
+      </div>
 
       {/* Main Section */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-10 ">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-10">
         {/* Left Content */}
         <div className="max-w-lg font-[Abhaya_Libre] mt-10 ml-20">
-          <div className="flex flex-col gap-10 ">
+          <div className="flex flex-col gap-10">
             <h2 className="text-7xl font-bold">Get your family a new member.</h2>
             <p className="text-black mb-6 text-2xl">
               Open your doors and hearts to pets in need of a home and it will be thankful to you for the rest of their lives.
@@ -25,7 +35,7 @@ const AHomePage: React.FC = () => {
 
           {/* Paw prints */}
           <div className="flex gap-4">
-            <img src="src\assets\images\HomePaw.png" alt="Paw Print" />
+            <img src="src/assets/images/HomePaw.png" alt="Paw Print" />
           </div>
         </div>
 

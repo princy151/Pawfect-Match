@@ -20,7 +20,7 @@ const ALogin: React.FC = () => {
         password,
       });
       console.log('Login successful:', response.data);
-      navigate('/dashboard');
+      navigate('/adopterhome');
     } catch (error: any) {
       console.error('Login failed:', error.response?.data || error.message);
       setErrorMsg(error.response?.data?.message || 'Login failed');
