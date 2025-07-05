@@ -23,6 +23,7 @@ import ASecondPetPage from './pages/adopter/petsdata';
 import AMorePets from './pages/adopter/morepets';
 import FavoritePetsPage from './pages/adopter/favourite';
 import ResetPassword from './pages/shelter/ResetPassword';
+import ResetPasswordad from './pages/adopter/Resetpasswordad';
 
 
 const router = createBrowserRouter([
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
   {
     path: '/resetpassword/:token',
     element: <ResetPassword />,
+  },
+    {
+    path: '/aresetpassword/:token',
+    element: <ResetPasswordad />,
   },
 
 

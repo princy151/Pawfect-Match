@@ -30,13 +30,13 @@ const ALogin: React.FC = () => {
   const handleForgetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // TODO: Adjust this API endpoint to your backend
-      await axios.post('http://localhost:3000/api/v1/adopter/forgot-password', {
+      const response = await axios.post('http://localhost:3000/api/v1/adopter/forgotpassword', {
         email: resetEmail,
       });
-      setResetMessage('Password reset link sent! Please check your email.');
+      setResetMessage('✅ Password reset link sent! Please check your email or console.');
+      console.log('🔗 Reset link:', response.data.resetUrl);
     } catch (error: any) {
-      setResetMessage(error.response?.data?.message || 'Failed to send reset link.');
+      setResetMessage(error.response?.data?.message || '❌ Failed to send reset link.');
     }
   };
 
@@ -50,13 +50,10 @@ const ALogin: React.FC = () => {
         ← Back
       </button>
 
-      {/* Forget Password Modal */}
+      {/* 🔒 Forget Password Modal */}
       {showForgetPassword && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300"
-          style={{ backgroundColor: 'rgba(5, 5, 5, 0.6)' }}
-        >
-          <div className="bg-white  rounded-2xl p-8 w-[90%] max-w-md shadow-xl border-2 border-[#A7522A] relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: 'rgba(5, 5, 5, 0.6)' }}>
+          <div className="bg-white rounded-2xl p-8 w-[90%] max-w-md shadow-xl border-2 border-[#A7522A] relative">
             <button
               onClick={() => {
                 setShowForgetPassword(false);
@@ -124,7 +121,6 @@ const ALogin: React.FC = () => {
             <form onSubmit={handleLogin}>
               <div className="mb-5 relative mt-8 ">
                 <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
-                  {/* Email Icon */}
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16.5 6.75L12 11.25L7.5 6.75M3.75 6.75V17.25H20.25V6.75H3.75Z" />
                   </svg>
@@ -142,7 +138,6 @@ const ALogin: React.FC = () => {
 
               <div className="mb-10 relative">
                 <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
-                  {/* Lock Icon */}
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <rect x="5" y="11" width="14" height="10" rx="2" ry="2" strokeWidth="1.5" />
                     <path d="M8 11V7a4 4 0 018 0v4" strokeWidth="1.5" />
