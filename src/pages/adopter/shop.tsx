@@ -8,11 +8,15 @@ interface Product {
   name: string;
   price: string;
   discount?: string;
-  image: string; // this should be just the filename stored in DB
+  image: string; // filename stored in DB
 }
 
 const AShop: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const BASE_URL = 'http://localhost:3000';
+
+  // Get logged-in user ID from localStorage
+  const userId = localStorage.getItem('adopterId');
 
   useEffect(() => {
     fetchProducts();
@@ -27,7 +31,31 @@ const AShop: React.FC = () => {
     }
   };
 
-  const BASE_URL = 'http://localhost:3000';
+  const addToCart = async (productId: string) => {
+    if (!userId) {
+      alert('Please login to add items to cart.');
+      return;
+    }
+
+    const quantityStr = prompt('Enter quantity to add:', '1');
+    if (!quantityStr) return; // user cancelled
+    const quantity = Number(quantityStr);
+    if (isNaN(quantity) || quantity <= 0) {
+      alert('Please enter a valid positive number for quantity.');
+      return;
+    }
+
+    try {
+      await axios.post(`http://localhost:3000/api/v1/cart/${userId}/add`, {
+        productId,
+        quantity,
+      });
+      alert(`Added ${quantity} item(s) to cart!`);
+    } catch (err) {
+      console.error('Failed to add to cart:', err);
+      alert('Failed to add product to cart.');
+    }
+  };
 
   return (
     <div className="bg-white min-h-screen">
@@ -60,7 +88,9 @@ const AShop: React.FC = () => {
 
       {/* Offer Products */}
       <section className="px-6 py-4">
-        <h2 className="text-4xl font-semibold mb-4 ml-35 font-[Abhaya_Libre]">Offer Products</h2>
+        <h2 className="text-4xl font-semibold mb-4 ml-35 font-[Abhaya_Libre]">
+          Offer Products
+        </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center px-30">
           {products
             .filter((p) => p.discount && p.discount !== '0%')
@@ -70,6 +100,7 @@ const AShop: React.FC = () => {
                 imageUrl={`${BASE_URL}/uploads/${product.image}`}
                 price={product.price}
                 discount={product.discount || ''}
+                onAddToCart={() => addToCart(product._id)}
               />
             ))}
         </div>
@@ -77,7 +108,9 @@ const AShop: React.FC = () => {
 
       {/* More Products */}
       <section className="px-6 py-4">
-        <h2 className="text-4xl font-semibold mb-4 ml-35 font-[Abhaya_Libre]">More Products</h2>
+        <h2 className="text-4xl font-semibold mb-4 ml-35 font-[Abhaya_Libre]">
+          More Products
+        </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center px-30">
           {products.map((product) => (
             <ShopCard
@@ -85,6 +118,7 @@ const AShop: React.FC = () => {
               imageUrl={`${BASE_URL}/uploads/${product.image}`}
               price={product.price}
               discount={product.discount || ''}
+              onAddToCart={() => addToCart(product._id)}
             />
           ))}
         </div>

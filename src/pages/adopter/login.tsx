@@ -12,20 +12,25 @@ const ALogin: React.FC = () => {
   const [resetEmail, setResetEmail] = useState('');
   const [resetMessage, setResetMessage] = useState('');
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:3000/api/v1/adopter/login', {
-        email,
-        password,
-      });
-      console.log('Login successful:', response.data);
-      navigate('/adopterhome');
-    } catch (error: any) {
-      console.error('Login failed:', error.response?.data || error.message);
-      setErrorMsg(error.response?.data?.message || 'Login failed');
-    }
-  };
+const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post('http://localhost:3000/api/v1/adopter/login', {
+      email,
+      password,
+    });
+
+    // Save email and ID to localStorage
+    localStorage.setItem('adopterEmail', email);
+    localStorage.setItem('adopterId', response.data.data._id);
+
+    console.log('Login successful:', response.data);
+    navigate('/adopterhome');
+  } catch (error: any) {
+    console.error('Login failed:', error.response?.data || error.message);
+    setErrorMsg(error.response?.data?.message || 'Login failed');
+  }
+};
 
   const handleForgetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,7 +55,6 @@ const ALogin: React.FC = () => {
         ← Back
       </button>
 
-      {/* 🔒 Forget Password Modal */}
       {showForgetPassword && (
         <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: 'rgba(5, 5, 5, 0.6)' }}>
           <div className="bg-white rounded-2xl p-8 w-[90%] max-w-md shadow-xl border-2 border-[#A7522A] relative">
@@ -90,7 +94,6 @@ const ALogin: React.FC = () => {
         </div>
       )}
 
-      {/* Main Login Page */}
       <div className="flex flex-col md:flex-row items-start justify-center gap-10 w-full max-w-6xl">
         <div className="md:w-1/2 text-left relative">
           <h2

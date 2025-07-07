@@ -46,8 +46,8 @@ const router = createBrowserRouter([
     element: < AboutUsPage />,
   },
   {
-    path: '/adopterform',
-    element: < AdoptionForm />,
+    path: '/adopterform/:petId',
+    element: <AdoptionForm />,
   },
   {
     path: '/adopterlogin',
@@ -125,8 +125,8 @@ const router = createBrowserRouter([
     element: < SAboutUsPage />,
   },
   {
-    path: '/shelterform',
-    element: < SAdoptionForm />,
+    path: '/shelterform/:formId',
+    element: <SAdoptionForm />,
   },
   {
     path: '/shelterlogin',

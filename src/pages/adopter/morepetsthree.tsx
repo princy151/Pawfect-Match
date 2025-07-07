@@ -167,7 +167,10 @@ const AMorePetsThree = () => {
                                 <p><strong>Description:</strong> {selectedRabbit.description || 'A gentle and loving rabbit looking for a cozy home.'}</p>
                             </div>
                             <div className="mt-6 text-right">
-                                <button className="bg-[#A7522A] text-white px-5 py-2 font-bowlby rounded-2xl hover:bg-orange-700 transition">
+                                <button
+                                    onClick={() => navigate(`/adopterform/${selectedRabbit._id}`)}
+                                    className="bg-[#A7522A] text-white px-5 py-2 font-bowlby rounded-2xl hover:bg-orange-700 transition"
+                                >
                                     View Adoption Form
                                 </button>
                             </div>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DogCard } from '../../assets/common/card';
 import SNavbar from '../../assets/common/snavbar';
+import { useNavigate } from 'react-router-dom';
 
 interface Dog {
   _id?: string;
@@ -16,29 +16,65 @@ interface Dog {
   description?: string;
 }
 
+interface AdoptionForm {
+  _id?: string;
+  petId: string | { _id: string };
+  // other fields if needed
+}
+
 const ShelterHomePage: React.FC = () => {
   const [dogs, setDogs] = useState<Dog[]>([]);
+  const [adoptedPets, setAdoptedPets] = useState<Dog[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [formByPetId, setFormByPetId] = useState<Map<string, string>>(new Map());
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchDogs();
+    fetchDogsAndAdoptions();
   }, []);
 
-  const fetchDogs = async () => {
+  const fetchDogsAndAdoptions = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/v1/pet');
-      setDogs(res.data.data);
+      const [dogsRes, formsRes] = await Promise.all([
+        axios.get('http://localhost:3000/api/v1/pet'),
+        axios.get('http://localhost:3000/api/v1/adoption'),
+      ]);
+
+      const allDogs: Dog[] = dogsRes.data.data;
+      const forms: AdoptionForm[] = formsRes.data.data;
+
+      // Map petId to adoption form ID
+      const map = new Map<string, string>();
+      forms.forEach((form) => {
+        let petIdStr: string | undefined;
+        if (typeof form.petId === 'string') petIdStr = form.petId;
+        else if (form.petId && typeof form.petId === 'object' && '_id' in form.petId) petIdStr = form.petId._id;
+
+        if (petIdStr && form._id) {
+          map.set(petIdStr, form._id);
+        }
+      });
+
+      setFormByPetId(map);
+
+      // Filter dogs that have adoption forms
+      const adoptedDogList = allDogs.filter((dog) => dog._id && map.has(dog._id));
+
+      setDogs(allDogs);
+      setAdoptedPets(adoptedDogList);
+      setSelectedIndex(0);
     } catch (err) {
-      console.error('Error fetching dogs', err);
+      console.error('Error fetching dogs or adoption forms', err);
     }
   };
 
-  const selectedDog = dogs[selectedIndex];
+  const selectedDog = adoptedPets[selectedIndex];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <SNavbar />
 
+      {/* Top hero section - unchanged */}
       <section className="relative w-full h-[800px] flex items-center justify-center text-black overflow-hidden font-[Abhaya_Libre]">
         <img
           src="src/assets/images/ShelterHome.jpg"
@@ -46,13 +82,18 @@ const ShelterHomePage: React.FC = () => {
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        <Link to="/shelterlogin">
+        {/* Logout button */}
+        <button
+          onClick={() => navigate('/shelterlogin')}
+          className="absolute top-6 right-6 w-10 h-10 z-40 cursor-pointer hover:scale-105 transition-transform duration-200 bg-white rounded-full flex items-center justify-center"
+          aria-label="Logout"
+        >
           <img
             src="src/assets/images/logout.png"
             alt="Logout"
-            className="absolute top-6 right-6 w-10 h-10 z-40 cursor-pointer hover:scale-105 transition-transform duration-200"
+            className="w-6 h-6"
           />
-        </Link>
+        </button>
 
         <div className="absolute inset-0"></div>
 
@@ -65,11 +106,12 @@ const ShelterHomePage: React.FC = () => {
               Every paw deserves a place to belong. Partner with us to give rescue pets the love, care,
               and second chance they’ve been waiting for.
             </p>
-            <Link to="/petdetails">
-              <button className="bg-[#A7522A] text-white font-extrabold text-lg px-6 py-3 rounded-xl hover:bg-[#E7DAD1] hover:text-black transition drop-shadow-lg">
-                LIST A PET
-              </button>
-            </Link>
+            <button
+              onClick={() => navigate('/petdetails')}
+              className="bg-[#A7522A] text-white font-extrabold text-lg px-6 py-3 rounded-xl hover:bg-[#E7DAD1] hover:text-black transition drop-shadow-lg"
+            >
+              LIST A PET
+            </button>
             <div className="mt-6 space-y-1 text-md md:text-lg font-extrabold">
               <p>🐾 800+ Pets Listed</p>
               <p>🐾 120 Shelters Partnered</p>
@@ -84,16 +126,20 @@ const ShelterHomePage: React.FC = () => {
         <h3 className="text-xl font-semibold mb-6 text-center">Review the adoption form</h3>
         <div className="flex flex-col md:flex-row gap-8">
           <div className="grid grid-cols-2 gap-8 p-10">
-            {dogs.map((dog, index) => (
-              <DogCard
-                key={dog._id || index}
-                name={dog.name}
-                age={dog.age}
-                image={dog.image}
-                selected={selectedIndex === index}
-                onClick={() => setSelectedIndex(index)}
-              />
-            ))}
+            {adoptedPets.length === 0 ? (
+              <p className="text-gray-500 col-span-full text-center">No adoption forms submitted yet.</p>
+            ) : (
+              adoptedPets.map((dog, index) => (
+                <DogCard
+                  key={dog._id || index}
+                  name={dog.name}
+                  age={dog.age}
+                  image={dog.image}
+                  selected={selectedIndex === index}
+                  onClick={() => setSelectedIndex(index)}
+                />
+              ))
+            )}
           </div>
 
           {selectedDog && (
@@ -113,7 +159,19 @@ const ShelterHomePage: React.FC = () => {
                 <p><strong>Description:</strong> {selectedDog.description}</p>
               </div>
               <div className="mt-auto text-right">
-                <button className="bg-[#A7522A] text-white px-5 py-2 font-bowlby rounded-2xl hover:bg-orange-700 transition">
+                <button
+                  onClick={() => {
+                    if (selectedDog._id) {
+                      const formId = formByPetId.get(selectedDog._id);
+                      if (formId) {
+                        navigate(`/shelterform/${formId}`);
+                      } else {
+                        alert('No adoption form found for this dog.');
+                      }
+                    }
+                  }}
+                  className="bg-[#A7522A] text-white px-5 py-2 font-bowlby rounded-2xl hover:bg-orange-700 transition"
+                >
                   View Adoption Form
                 </button>
               </div>

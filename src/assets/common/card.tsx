@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 
 interface DogCardProps {
   name: string;
   age: number;
-  image: string;
+  image: string;            // might be full URL or just filename
   selected?: boolean;
   onClick?: () => void;
   isFavorite?: boolean;
-  onFavoriteToggle?: () => void;
+  onFavoriteToggle?: (fav: boolean) => void;
 }
 
 export const DogCard: React.FC<DogCardProps> = ({
@@ -20,23 +20,24 @@ export const DogCard: React.FC<DogCardProps> = ({
   isFavorite: isFavoriteProp = false,
   onFavoriteToggle,
 }) => {
-  // Local state to toggle heart color on click
   const [isFavorite, setIsFavorite] = useState(isFavoriteProp);
+
+  useEffect(() => {
+    setIsFavorite(isFavoriteProp);
+  }, [isFavoriteProp]);
 
   const handleHeartClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Toggle local favorite state
-    setIsFavorite(!isFavorite);
-
-    // Call external toggle if provided
-    if (onFavoriteToggle) onFavoriteToggle();
+    const next = !isFavorite;
+    setIsFavorite(next);
+    onFavoriteToggle?.(next);
   };
 
-  // BASE URL of your backend
   const BASE_URL = "http://localhost:3000";
-
-  // Construct full image URL
-  const imageUrl = image ? `${BASE_URL}/uploads/${image}` : "/default-image.png";
+  // If `image` starts with "http", use it as-is; otherwise treat it as an upload filename.
+  const imageUrl = image.startsWith("http")
+    ? image
+    : `${BASE_URL}/uploads/${image}`;
 
   return (
     <div
@@ -47,21 +48,17 @@ export const DogCard: React.FC<DogCardProps> = ({
         "w-64 h-fit relative"
       )}
     >
-      {/* Heart Button */}
       <div className="absolute top-2 right-2 z-10">
         <button
           onClick={handleHeartClick}
-          className={clsx(
-            "p-1 rounded-full transition focus:outline-none hover:bg-gray-100 cursor-pointer"
-          )}
+          className="p-1 rounded-full transition focus:outline-none hover:bg-gray-100"
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         >
           <span className={clsx("text-lg", isFavorite ? "text-red-500" : "text-gray-400")}>
             {isFavorite ? "❤️" : "🤍"}
           </span>
         </button>
       </div>
-
-      {/* Image */}
       <div className="rounded-xl overflow-hidden">
         <img
           src={imageUrl}
@@ -69,8 +66,6 @@ export const DogCard: React.FC<DogCardProps> = ({
           className="w-64 h-48 object-cover rounded-xl"
         />
       </div>
-
-      {/* Info */}
       <div className="flex justify-center mt-2">
         <span className="bg-gray-100 px-4 py-1 rounded-lg text-sm font-semibold">
           {name} <span className="text-xs font-normal ml-1">{age} yrs</span>

@@ -164,7 +164,10 @@ const AMorePets = () => {
                 <p><strong>Description:</strong> {selectedDog.description || "Looking for a loving home!"}</p>
               </div>
               <div className="mt-6 text-right">
-                <button className="bg-[#A7522A] text-white px-5 py-2 font-bowlby rounded-2xl hover:bg-orange-700 transition">
+                <button
+                  className="bg-[#A7522A] text-white px-5 py-2 font-bowlby rounded-2xl hover:bg-orange-700 transition"
+                  onClick={() => navigate(`/adopterform/${selectedDog._id}`)}
+                >
                   View Adoption Form
                 </button>
               </div>

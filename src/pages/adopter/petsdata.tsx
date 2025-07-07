@@ -10,11 +10,15 @@ interface Pet {
   age: number;
   image: string;
   breed: string;
+  isFavorite?: boolean;
 }
 
 const ASecondPetPage: React.FC = () => {
   const [petsByCategory, setPetsByCategory] = useState<{ [key: string]: Pet[] }>({});
   const navigate = useNavigate();
+
+  // Get logged-in user ID from localStorage
+  const userId = localStorage.getItem("adopterId");
 
   useEffect(() => {
     fetchPets();
@@ -22,16 +26,56 @@ const ASecondPetPage: React.FC = () => {
 
   const fetchPets = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/v1/pet");
-      const grouped = res.data.data.reduce((acc: { [key: string]: Pet[] }, pet: Pet) => {
+      const petsRes = await axios.get("http://localhost:3000/api/v1/pet");
+      const favRes = userId
+        ? await axios.get(`http://localhost:3000/api/v1/fav/${userId}`)
+        : { data: { data: [] } };
+
+      // Convert all favorite petIds to strings for reliable comparison
+      const favoritePetIds = favRes.data.data.map((fav: any) => String(fav.petId));
+
+      // Map pets and mark if they are favorites
+      const petsWithFav = petsRes.data.data.map((pet: Pet) => ({
+        ...pet,
+        isFavorite: favoritePetIds.includes(String(pet._id)),
+      }));
+
+      // Group pets by breed
+      const grouped = petsWithFav.reduce((acc: { [key: string]: Pet[] }, pet: Pet) => {
         const breed = pet.breed || "Other";
         if (!acc[breed]) acc[breed] = [];
         acc[breed].push(pet);
         return acc;
       }, {});
+
       setPetsByCategory(grouped);
     } catch (err) {
-      console.error("Failed to fetch pets", err);
+      console.error("Failed to fetch pets or favorites", err);
+    }
+  };
+
+  // Toggle favorite state and update backend
+  const toggleFavorite = async (petId: string, currentlyFavorite: boolean) => {
+    if (!userId) {
+      alert("Please log in to favorite pets.");
+      return;
+    }
+    try {
+      if (currentlyFavorite) {
+        // Remove from favorites
+        await axios.delete(`http://localhost:3000/api/v1/fav/${userId}/remove/${petId}`);
+      } else {
+        // Add to favorites
+        await axios.post(`http://localhost:3000/api/v1/fav`, {
+          userId,
+          petId,
+        });
+      }
+      // Refresh pets and favorites state
+      fetchPets();
+    } catch (err) {
+      console.error("Failed to update favorites", err);
+      alert("Error updating favorites.");
     }
   };
 
@@ -39,10 +83,10 @@ const ASecondPetPage: React.FC = () => {
     <div className="relative mx-auto font-serif">
       <Navbar />
 
-      {/* Favorite Button */}
+      {/* Favorite Button to navigate */}
       <div className="fixed top-25 right-6 z-50">
         <button
-          onClick={() => navigate('/adopterfav')}
+          onClick={() => navigate("/adopterfav")}
           aria-label="Go to Favorites"
           className="text-[#A7522A] text-3xl hover:text-orange-600 transition focus:outline-none"
           title="Go to Favorites"
@@ -71,6 +115,8 @@ const ASecondPetPage: React.FC = () => {
                 name={pet.name}
                 age={pet.age}
                 image={pet.image}
+                isFavorite={pet.isFavorite ?? false}
+                onFavoriteToggle={() => toggleFavorite(pet._id!, pet.isFavorite ?? false)}
               />
             ))}
           </div>
