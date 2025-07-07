@@ -31,7 +31,7 @@ const ResetPasswordad: React.FC = () => {
         password: newPassword,
       });
       alert('✅ Password updated successfully! You can now log in.');
-      navigate('/shelterlogin');
+      navigate('/adopterlogin');
     } catch (err: any) {
       alert(err.response?.data?.message || '❌ Failed to reset password.');
     }

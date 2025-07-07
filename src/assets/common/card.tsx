@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 
 interface DogCardProps {
   name: string;
   age: number;
-  imageUrl: string;
+  image: string;
   selected?: boolean;
   onClick?: () => void;
   isFavorite?: boolean;
@@ -14,16 +14,29 @@ interface DogCardProps {
 export const DogCard: React.FC<DogCardProps> = ({
   name,
   age,
-  imageUrl,
+  image,
   selected,
   onClick,
-  isFavorite = false,
+  isFavorite: isFavoriteProp = false,
   onFavoriteToggle,
 }) => {
+  // Local state to toggle heart color on click
+  const [isFavorite, setIsFavorite] = useState(isFavoriteProp);
+
   const handleHeartClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    // Toggle local favorite state
+    setIsFavorite(!isFavorite);
+
+    // Call external toggle if provided
     if (onFavoriteToggle) onFavoriteToggle();
   };
+
+  // BASE URL of your backend
+  const BASE_URL = "http://localhost:3000";
+
+  // Construct full image URL
+  const imageUrl = image ? `${BASE_URL}/uploads/${image}` : "/default-image.png";
 
   return (
     <div
@@ -38,10 +51,8 @@ export const DogCard: React.FC<DogCardProps> = ({
       <div className="absolute top-2 right-2 z-10">
         <button
           onClick={handleHeartClick}
-          disabled={!onFavoriteToggle}
           className={clsx(
-            "p-1 rounded-full transition focus:outline-none",
-            onFavoriteToggle ? "hover:bg-gray-100 cursor-pointer" : "cursor-default"
+            "p-1 rounded-full transition focus:outline-none hover:bg-gray-100 cursor-pointer"
           )}
         >
           <span className={clsx("text-lg", isFavorite ? "text-red-500" : "text-gray-400")}>

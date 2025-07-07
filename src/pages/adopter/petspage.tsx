@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
-import Navbar from '../../assets/common/navbar';
-import { DogCard } from '../../assets/common/card';
+import React, { useEffect, useState } from "react";
+import Navbar from "../../assets/common/navbar";
+import { DogCard } from "../../assets/common/card";
+import axios from "axios";
 
-const pets = [
-  { id: 1, name: 'Laila', age: 2, imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
-  { id: 2, name: 'Bitty', age: 3, imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
-  { id: 3, name: 'George', age: 2.5, imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
-  { id: 4, name: 'Franklin', age: 1.5, imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
-  { id: 5, name: 'Salman', age: 1, imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
-  { id: 6, name: 'Taison', age: 2, imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
-];
+interface Pet {
+  _id: string;
+  name: string;
+  age: number;
+  image: string;
+}
 
 const PetsPage: React.FC = () => {
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [pets, setPets] = useState<Pet[]>([]);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchPets();
+  }, []);
+
+  const fetchPets = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/api/v1/pet");
+      setPets(res.data.data || []);
+    } catch (err) {
+      console.error("Error fetching pets", err);
+    }
+  };
 
   return (
     <div className="relative w-full min-h-screen bg-white overflow-hidden">
@@ -36,10 +49,7 @@ const PetsPage: React.FC = () => {
           </h1>
           <p className="text-xl text-gray-800 max-w-lg text-justify">
             Bringing a pet into your life is more than just an adoption—it’s the beginning
-            of a beautiful bond built on trust, love, and companionship. Every animal deserves
-            a second chance, and every home has the power to offer it. At Pawfect Match, we believe
-            that pets don’t just fill your home—they fill your heart. Take that loving step forward
-            and give a furry friend the warmth, care, and forever family they’ve been waiting for.
+            of a beautiful bond built on trust, love, and companionship...
           </p>
         </div>
 
@@ -51,21 +61,23 @@ const PetsPage: React.FC = () => {
           <div className="grid grid-cols-2 grid-rows-3 gap-4">
             {pets.map((pet) => (
               <div
-                key={pet.id}
-                onMouseEnter={() => setHoveredId(pet.id)}
+                key={pet._id}
+                onMouseEnter={() => setHoveredId(pet._id)}
                 onMouseLeave={() => setHoveredId(null)}
               >
                 <DogCard
                   name={pet.name}
                   age={pet.age}
-                  imageUrl={pet.imageUrl}
-                  selected={hoveredId === pet.id}
+                  image={pet.image}
+                  selected={hoveredId === pet._id}
                 />
               </div>
             ))}
           </div>
 
-          <button className="ml-120 text-sm mt-4 px-5 py-2 rounded-full bg-white text-gray-600 hover:underline w-fit text-center shadow-md">more →</button>
+          <button className="ml-120 text-sm mt-4 px-5 py-2 rounded-full bg-white text-gray-600 hover:underline w-fit text-center shadow-md">
+            more →
+          </button>
         </div>
       </div>
     </div>

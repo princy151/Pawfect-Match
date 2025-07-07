@@ -24,6 +24,8 @@ import AMorePets from './pages/adopter/morepets';
 import FavoritePetsPage from './pages/adopter/favourite';
 import ResetPassword from './pages/shelter/ResetPassword';
 import ResetPasswordad from './pages/adopter/Resetpasswordad';
+import AMorePetsTwo from './pages/adopter/morepetstwo';
+import AMorePetsThree from './pages/adopter/morepetsthree';
 
 
 const router = createBrowserRouter([
@@ -80,6 +82,14 @@ const router = createBrowserRouter([
     element: < AMorePets />,
   },
   {
+    path: '/adoptermorepetstwo',
+    element: < AMorePetsTwo />,
+  },
+  {
+    path: '/adoptermorepetsthree',
+    element: < AMorePetsThree />,
+  },
+  {
     path: '/adopterfav',
     element: < FavoritePetsPage />,
   },
@@ -87,7 +97,7 @@ const router = createBrowserRouter([
     path: '/resetpassword/:token',
     element: <ResetPassword />,
   },
-    {
+  {
     path: '/aresetpassword/:token',
     element: <ResetPasswordad />,
   },

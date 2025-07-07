@@ -1,38 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { DogCard } from "../../assets/common/card";
 import Navbar from "../../assets/common/navbar";
 import { useNavigate } from "react-router-dom";
 
-const pets = {
-  Dogs: [
-    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee", selected: true },
-    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
-    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
-    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
-  ],
-  Cats: [
-    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee", selected: true },
-    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
-    { name: "Lula", age: 3, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
-    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
-  ],
-  Rabbits: [
-    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee", selected: true },
-    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
-    { name: "Lula", age: 2, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
-    { name: "Bitty", age: 4.5, imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee" },
-  ],
-};
+interface Pet {
+  _id?: string;
+  name: string;
+  age: number;
+  image: string;
+  breed: string;
+}
 
 const ASecondPetPage: React.FC = () => {
+  const [petsByCategory, setPetsByCategory] = useState<{ [key: string]: Pet[] }>({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchPets();
+  }, []);
+
+  const fetchPets = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/api/v1/pet");
+      const grouped = res.data.data.reduce((acc: { [key: string]: Pet[] }, pet: Pet) => {
+        const breed = pet.breed || "Other";
+        if (!acc[breed]) acc[breed] = [];
+        acc[breed].push(pet);
+        return acc;
+      }, {});
+      setPetsByCategory(grouped);
+    } catch (err) {
+      console.error("Failed to fetch pets", err);
+    }
+  };
 
   return (
     <div className="relative mx-auto font-serif">
-      {/* Header */}
       <Navbar />
 
-      {/* Favorite Heart Button top right */}
+      {/* Favorite Button */}
       <div className="fixed top-25 right-6 z-50">
         <button
           onClick={() => navigate('/adopterfav')}
@@ -44,33 +51,26 @@ const ASecondPetPage: React.FC = () => {
         </button>
       </div>
 
-      <div
-        className="absolute inset-0 w-full h-full bg-[url('/src/assets/images/emptybg.png')] bg-repeat opacity-10 pointer-events-none"
-      />
+      <div className="absolute inset-0 w-full h-full bg-[url('/src/assets/images/emptybg.png')] bg-repeat opacity-10 pointer-events-none" />
 
-      {/* Title */}
-      <h2 className="text-2xl text-center font-semibold mb-8">
-        Choose your desired category
-      </h2>
+      <h2 className="text-2xl text-center font-semibold mb-8">Choose your desired category</h2>
 
-      {/* Category Sections */}
-      {Object.entries(pets).map(([category, items]) => (
+      {/* Render grouped pets */}
+      {Object.entries(petsByCategory).map(([category, items]) => (
         <div key={category} className="mb-12 ml-45">
           <div className="flex justify-between mb-5 pr-40">
             <h3 className="text-xl font-bold mb-4">{category}</h3>
-
             <button className="text-sm bg-white border px-4 py-2 rounded-full hover:bg-gray-100">
               more →
             </button>
           </div>
           <div className="flex flex-wrap gap-6">
-            {items.map((pet, index) => (
+            {items.map((pet) => (
               <DogCard
-                key={index}
+                key={pet._id}
                 name={pet.name}
                 age={pet.age}
-                imageUrl={pet.imageUrl}
-                selected={true}
+                image={pet.image}
               />
             ))}
           </div>

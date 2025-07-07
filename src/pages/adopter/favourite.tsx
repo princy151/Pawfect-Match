@@ -4,16 +4,16 @@ import Navbar from '../../assets/common/navbar';
 
 const pets = {
     Dogs: [
-        { name: 'Lula', age: 2, breed: 'Labrador', gender: 'Female', imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
-        { name: 'Bitty', age: 4.5, breed: 'Beagle', gender: 'Male', imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
+        { name: 'Lula', age: 2, breed: 'Labrador', gender: 'Female', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
+        { name: 'Bitty', age: 4.5, breed: 'Beagle', gender: 'Male', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
     ],
     Cats: [
-        { name: 'Milo', age: 3, breed: 'Persian', gender: 'Male', imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
-        { name: 'Luna', age: 2, breed: 'Siamese', gender: 'Female', imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
+        { name: 'Milo', age: 3, breed: 'Persian', gender: 'Male', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
+        { name: 'Luna', age: 2, breed: 'Siamese', gender: 'Female', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
     ],
     Rabbits: [
-        { name: 'BunBun', age: 1, breed: 'Mini Rex', gender: 'Female', imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
-        { name: 'Hopper', age: 2, breed: 'Dutch', gender: 'Male', imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
+        { name: 'BunBun', age: 1, breed: 'Mini Rex', gender: 'Female', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
+        { name: 'Hopper', age: 2, breed: 'Dutch', gender: 'Male', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee' },
     ],
 };
 
@@ -48,7 +48,7 @@ const FavoritePetsPage: React.FC = () => {
                                     <DogCard
                                         name={pet.name}
                                         age={pet.age}
-                                        imageUrl={pet.imageUrl}
+                                        image={pet.image}
                                         selected={selectedPet?.name === pet.name}
                                         isFavorite={true} // Always show filled heart
                                         onClick={() => setSelectedPet(pet)} // No onFavoriteToggle passed
@@ -63,7 +63,7 @@ const FavoritePetsPage: React.FC = () => {
                 {selectedPet && (
                     <div className="w-full lg:w-1/3 bg-[#FFFDFB] border border-[#A7522A] rounded-2xl p-6 shadow h-fit">
                         <img
-                            src={selectedPet.imageUrl}
+                            src={selectedPet.image}
                             alt={selectedPet.name}
                             className="w-48 h-48 object-cover rounded-lg mb-6 mx-auto"
                         />
