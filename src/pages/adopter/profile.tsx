@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../assets/common/navbar';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 interface AdopterProfile {
   _id: string;
@@ -15,6 +17,7 @@ const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<AdopterProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const adopterEmail = localStorage.getItem('adopterEmail');
 
@@ -55,7 +58,7 @@ const ProfilePage: React.FC = () => {
             {/* Profile Card */}
             <div className="relative flex flex-col items-start bg-[#FFFDFB] border-2 border-[#A7522A] rounded-4xl p-6 flex-1">
               <img
-                src="src/assets/images/profile.webp"
+                src="src/assets/images/profile.png"
                 alt="Profile"
                 className="w-40 h-40 object-cover rounded-md mb-4 mx-auto"
               />
@@ -84,13 +87,15 @@ const ProfilePage: React.FC = () => {
             {/* Right Buttons */}
             <div className="flex flex-col justify-between flex-1 font-semibold mt-20 text-center h-full">
               <div className="flex flex-col gap-7">
-                <button className="border px-4 py-3 rounded-lg hover:bg-gray-100 transition">
+                <button className="border px-4 py-3 rounded-lg hover:bg-gray-100 transition" onClick={() => navigate(`/adopterhome`)}>
                   Back to Home Page
                 </button>
-                <button className="border px-4 py-3 rounded-lg hover:bg-gray-100 transition">
+                
+                <button className="border px-4 py-3 rounded-lg hover:bg-gray-100 transition" onClick={() => navigate(`/adoptercart`)}>
                   Visit your Cart
                 </button>
-                <button className="border px-4 py-3 rounded-lg hover:bg-gray-100 transition">
+
+                <button className="border px-4 py-3 rounded-lg hover:bg-gray-100 transition" onClick={() => navigate(``)}>
                   View your Adoption Form
                 </button>
               </div>

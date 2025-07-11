@@ -169,7 +169,7 @@ const AMorePetsTwo = () => {
               <div className="mt-6 text-right">
                 <button
                   onClick={() => navigate(`/adopterform/${selectedCat._id}`)}
-                  className="bg-[#A7522A] text-white px-5 py-2 font-bowlby rounded-2xl hover:bg-orange-700 transition"
+                  className="bg-[#A7522A] text-[#E7DAD1] px-5 py-2 font-bowlby rounded-2xl hover:bg-[#934622] transition"
                 >
                   View Adoption Form
                 </button>

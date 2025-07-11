@@ -104,7 +104,14 @@ const ASecondPetPage: React.FC = () => {
         <div key={category} className="mb-12 ml-45">
           <div className="flex justify-between mb-5 pr-40">
             <h3 className="text-xl font-bold mb-4">{category}</h3>
-            <button className="text-sm bg-white border px-4 py-2 rounded-full hover:bg-gray-100">
+            <button
+              className="text-sm bg-white border px-4 py-2 rounded-full hover:bg-gray-100"
+              onClick={() => {
+                if (category.toLowerCase() === "dog") navigate("/adoptermorepets");
+                else if (category.toLowerCase() === "cat") navigate("/adoptermorepetstwo");
+                else if (category.toLowerCase() === "rabbit") navigate("/adoptermorepetsthree");
+              }}
+            >
               more →
             </button>
           </div>

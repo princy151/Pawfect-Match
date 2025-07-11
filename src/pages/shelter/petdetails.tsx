@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { DogCard } from "../../assets/common/card";
 import SNavbar from "../../assets/common/snavbar";
@@ -28,11 +28,14 @@ const PetDetails: React.FC = () => {
     description: "",
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string; color: string } | null>(null);
   const [showConfirm, setShowConfirm] = useState<{ show: boolean; id: string | null }>({
     show: false,
     id: null,
   });
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     fetchPets();
@@ -56,13 +59,15 @@ const PetDetails: React.FC = () => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setImageFile(e.target.files[0]);
+      const file = e.target.files[0];
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
-  const showToast = (message: string) => {
-    setToastMessage(message);
-    setTimeout(() => setToastMessage(null), 3000);
+  const showToast = (message: string, color: "green" | "red") => {
+    setToast({ message, color });
+    setTimeout(() => setToast(null), 3000);
   };
 
   const handleSave = async () => {
@@ -81,12 +86,12 @@ const PetDetails: React.FC = () => {
         await axios.put(`http://localhost:3000/api/v1/pet/${editingPetId}`, data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        showToast("Pet updated successfully!");
+        showToast("Pet updated successfully!", "green");
       } else {
         await axios.post("http://localhost:3000/api/v1/pet", data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        showToast("Pet added successfully!");
+        showToast("Pet added successfully!", "green");
       }
 
       setFormData({
@@ -99,7 +104,9 @@ const PetDetails: React.FC = () => {
         description: "",
       });
       setImageFile(null);
+      setImagePreview(null);
       setEditingPetId(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
       fetchPets();
     } catch (err) {
       console.error("Error saving pet", err);
@@ -115,7 +122,7 @@ const PetDetails: React.FC = () => {
     try {
       await axios.delete(`http://localhost:3000/api/v1/pet/${showConfirm.id}`);
       fetchPets();
-      showToast("Pet deleted successfully!");
+      showToast("Pet deleted successfully!", "red");
       setShowConfirm({ show: false, id: null });
     } catch (err) {
       console.error("Error deleting pet", err);
@@ -133,14 +140,21 @@ const PetDetails: React.FC = () => {
       dislikes: pet.dislikes || "",
       description: pet.description || "",
     });
+
+    // Show existing image if any
+    if (pet.image) {
+      const imagePath = `http://localhost:3000/uploads/${pet.image}`;
+      setImagePreview(imagePath);
+    }
+
     setImageFile(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <div className="relative mx-auto font-serif">
       <SNavbar />
-
       <div className="absolute inset-0 w-full h-full bg-[url('/src/assets/images/emptybg.png')] bg-repeat opacity-10 pointer-events-none" />
 
       <div className="text-2xl mb-4 ml-8 cursor-pointer">←</div>
@@ -151,20 +165,12 @@ const PetDetails: React.FC = () => {
           <div className="space-y-3">
             <input name="name" value={formData.name} onChange={handleInputChange} placeholder="Name" className="w-full border p-2 rounded" />
             <input name="age" value={formData.age} onChange={handleInputChange} placeholder="Age" type="number" className="w-full border p-2 rounded" />
-            
-            {/* Breed Dropdown */}
-            <select
-              name="breed"
-              value={formData.breed}
-              onChange={handleInputChange}
-              className="w-full border p-2 rounded text-gray-700"
-            >
+            <select name="breed" value={formData.breed} onChange={handleInputChange} className="w-full border p-2 rounded text-gray-700">
               <option value="">Select Breed</option>
               <option value="Dog">Dog</option>
               <option value="Cat">Cat</option>
               <option value="Rabbit">Rabbit</option>
             </select>
-
             <select name="gender" value={formData.gender} onChange={handleInputChange} className="w-full border p-2 rounded text-gray-700">
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
@@ -173,11 +179,32 @@ const PetDetails: React.FC = () => {
             <input name="likes" value={formData.likes} onChange={handleInputChange} placeholder="Likes" className="w-full border p-2 rounded" />
             <input name="dislikes" value={formData.dislikes} onChange={handleInputChange} placeholder="Dislikes" className="w-full border p-2 rounded" />
           </div>
+
           <div className="space-y-3 flex flex-col justify-between">
-            <input type="file" onChange={handleImageChange} className="w-full border p-2 rounded" accept="image/*" />
-            <textarea name="description" value={formData.description} onChange={handleInputChange} placeholder="Description" className="w-full h-24 border p-2 rounded" />
+            <input
+              ref={fileInputRef}
+              type="file"
+              onChange={handleImageChange}
+              className="w-full border p-2 rounded"
+              accept="image/*"
+            />
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="w-full max-w-xs h-auto mt-2 rounded border"
+              />
+            )}
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              placeholder="Description"
+              className="w-full h-24 border p-2 rounded"
+            />
           </div>
         </div>
+
         <div className="text-center mt-6">
           <button onClick={handleSave} className="bg-[#A0522D] text-white px-6 py-2 rounded-full">
             {editingPetId ? "Update" : "Add"}
@@ -202,7 +229,7 @@ const PetDetails: React.FC = () => {
 
       {/* Confirmation Modal */}
       {showConfirm.show && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
           <div className="bg-white p-8 rounded-xl shadow-2xl w-[90%] max-w-md text-center">
             <h3 className="text-xl font-bold mb-4 text-gray-800">Are you sure you want to delete this pet?</h3>
             <div className="flex justify-center space-x-4">
@@ -214,9 +241,12 @@ const PetDetails: React.FC = () => {
       )}
 
       {/* Toast */}
-      {toastMessage && (
-        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-[#A0522D] text-white px-8 py-4 rounded-full shadow-xl text-lg font-semibold z-50">
-          {toastMessage}
+      {toast && (
+        <div
+          className={`fixed top-4 left-1/2 transform -translate-x-1/2 px-8 py-4 rounded-full shadow-xl text-lg font-semibold z-50 ${toast.color === "green" ? "bg-green-600 text-white" : "bg-red-600 text-white"
+            }`}
+        >
+          {toast.message}
         </div>
       )}
     </div>
@@ -224,4 +254,3 @@ const PetDetails: React.FC = () => {
 };
 
 export default PetDetails;
- 

@@ -107,7 +107,7 @@ const ShelterHomePage: React.FC = () => {
               and second chance they’ve been waiting for.
             </p>
             <button
-              onClick={() => navigate('/petdetails')}
+              onClick={() => navigate('/shelterpets')}
               className="bg-[#A7522A] text-white font-extrabold text-lg px-6 py-3 rounded-xl hover:bg-[#E7DAD1] hover:text-black transition drop-shadow-lg"
             >
               LIST A PET

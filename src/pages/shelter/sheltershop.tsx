@@ -24,7 +24,7 @@ const ShopPage: React.FC = () => {
     isFeatured: false,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
   const [showConfirm, setShowConfirm] = useState<{ show: boolean; id: string | null }>({
     show: false,
     id: null,
@@ -59,8 +59,8 @@ const ShopPage: React.FC = () => {
     }
   };
 
-  const showToast = (message: string) => {
-    setToastMessage(message);
+  const showToast = (text: string, type: "success" | "error" = "success") => {
+    setToastMessage({ text, type });
     setTimeout(() => setToastMessage(null), 3000);
   };
 
@@ -76,10 +76,10 @@ const ShopPage: React.FC = () => {
 
       if (editingProductId) {
         await axios.put(`http://localhost:3000/api/v1/shop/${editingProductId}`, data);
-        showToast("Product updated!");
+        showToast("Product updated!", "success");
       } else {
         await axios.post("http://localhost:3000/api/v1/shop", data);
-        showToast("Product added!");
+        showToast("Product added!", "success");
       }
 
       setFormData({
@@ -106,7 +106,7 @@ const ShopPage: React.FC = () => {
     try {
       await axios.delete(`http://localhost:3000/api/v1/shop/${showConfirm.id}`);
       fetchProducts();
-      showToast("Product deleted!");
+      showToast("Product deleted!", "error");
       setShowConfirm({ show: false, id: null });
     } catch (err) {
       console.error("Error deleting product", err);
@@ -157,48 +157,43 @@ const ShopPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Product Sections */}
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl font-semibold mb-4 ml-10 font-[Abhaya_Libre]">Featured Products</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center px-10 mb-10">
           {products.filter(p => p.isFeatured).map((product) => (
-            <div className="relative" key={product._id}>
-              <button onClick={() => confirmDelete(product._id!)} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs z-10">✕</button>
-              <button onClick={() => handleEdit(product)} className="absolute -top-2 left-2 bg-yellow-400 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs z-10">✎</button>
-              <ShopECard
-                imageUrl={product.image}
-                price={`Rs.${product.price}`}
-                discount={product.discount || ""}
-                description={product.description || ""}
-                onEdit={() => handleEdit(product)}
-                onDelete={() => confirmDelete(product._id!)}
-              />
-            </div>
+            <ShopECard
+              key={product._id}
+              name={product.name}
+              imageUrl={product.image}
+              price={`Rs.${product.price}`}
+              discount={product.discount || ""}
+              description={product.description || ""}
+              onEdit={() => handleEdit(product)}
+              onDelete={() => confirmDelete(product._id!)}
+            />
           ))}
         </div>
 
         <h2 className="text-4xl font-semibold mb-4 ml-10 font-[Abhaya_Libre]">More Products</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center px-10 mb-20">
           {products.filter(p => !p.isFeatured).map((product) => (
-            <div className="relative" key={product._id}>
-              <button onClick={() => confirmDelete(product._id!)} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs z-10">✕</button>
-              <button onClick={() => handleEdit(product)} className="absolute -top-2 left-2 bg-yellow-400 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs z-10">✎</button>
-              <ShopECard
-                imageUrl={product.image}
-                price={`Rs.${product.price}`}
-                discount={product.discount || ""}
-                description={product.description || ""}
-                onEdit={() => handleEdit(product)}
-                onDelete={() => confirmDelete(product._id!)}
-              />
-            </div>
+            <ShopECard
+              key={product._id}
+              imageUrl={product.image}
+              name={product.name}
+              price={`Rs.${product.price}`}
+              discount={product.discount || ""}
+              description={product.description || ""}
+              onEdit={() => handleEdit(product)}
+              onDelete={() => confirmDelete(product._id!)}
+            />
           ))}
         </div>
       </div>
 
       {/* Confirmation Modal */}
       {showConfirm.show && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50"  style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
           <div className="bg-white p-8 rounded-xl shadow-2xl w-[90%] max-w-md text-center">
             <h3 className="text-xl font-bold mb-4 text-gray-800">Are you sure you want to delete this product?</h3>
             <div className="flex justify-center space-x-4">
@@ -211,8 +206,9 @@ const ShopPage: React.FC = () => {
 
       {/* Toast */}
       {toastMessage && (
-        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-[#A7522A] text-white px-8 py-4 rounded-full shadow-xl text-lg font-semibold z-50">
-          {toastMessage}
+        <div className={`fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg font-medium z-50 text-white transition-all duration-300
+          ${toastMessage.type === "success" ? "bg-green-600" : "bg-red-600"}`}>
+          {toastMessage.text}
         </div>
       )}
     </div>

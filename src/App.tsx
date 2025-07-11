@@ -26,6 +26,7 @@ import ResetPassword from './pages/shelter/ResetPassword';
 import ResetPasswordad from './pages/adopter/Resetpasswordad';
 import AMorePetsTwo from './pages/adopter/morepetstwo';
 import AMorePetsThree from './pages/adopter/morepetsthree';
+import OnboardingSinglePage from './pages/onboarding';
 
 
 const router = createBrowserRouter([
@@ -34,6 +35,11 @@ const router = createBrowserRouter([
     path: '/',
     element: < LandingPage />,
   },
+   {
+    path: '/onboarding',
+    element: < OnboardingSinglePage />,
+  },
+
 
 
   // Adopter Routes

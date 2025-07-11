@@ -172,7 +172,7 @@ const SLogin: React.FC = () => {
           <div className="mt-10 text-center text-2xl text-gray-700 w-full" style={{ fontFamily: "'Abhaya Libre', serif", fontWeight: 800 }}>
             <p className="mb-2">
               Don’t have an account? <br />
-              <a href="#" className="text-blue-600 hover:underline">Sign up</a>
+              <a href="/sheltersignup" className="text-blue-600 hover:underline">Sign up</a>
             </p>
             <p>
               Forget password?{' '}

@@ -99,13 +99,13 @@ const Navbar: React.FC = () => {
               </li>
               <li
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => navigate('/adoptermorepets')}
+                onClick={() => navigate('/adoptermorepetstwo')}
               >
                 Cats
               </li>
               <li
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => navigate('/adoptermorepets')}
+                onClick={() => navigate('/adoptermorepetsthree')}
               >
                 Rabbits
               </li>

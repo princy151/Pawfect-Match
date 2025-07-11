@@ -389,7 +389,7 @@ const SAdoptionForm: React.FC = () => {
 
       {/* Confirmation Modal */}
       {showConfirm.type && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50 " style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
           <div className="bg-[#FFFDFB] border-2 border-[#A7522A] rounded-xl p-8 w-11/12 max-w-md shadow-lg text-center">
             <h2 className="text-2xl font-bold mb-4 text-[#6B9D72]">
               {showConfirm.type === 'approve' ? 'Confirm Approval' : 'Confirm Denial'}

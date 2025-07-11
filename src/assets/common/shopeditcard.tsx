@@ -4,6 +4,7 @@ interface ShopCardProps {
   imageUrl: string;
   price: string;
   discount: string;
+  name: string; // ✅ Add name prop
   description: string;
   onEdit?: () => void;
   onDelete?: () => void;
@@ -13,6 +14,7 @@ const ShopECard: React.FC<ShopCardProps> = ({
   imageUrl,
   price,
   discount,
+  name,
   description,
   onEdit,
   onDelete
@@ -22,10 +24,15 @@ const ShopECard: React.FC<ShopCardProps> = ({
 
   return (
     <div className="relative w-[250px] border border-black rounded-2xl px-4 py-4 flex flex-col items-center">
+      {/* ✅ Product Name */}
+      <h3 className="text-lg font-semibold text-center text-[#5D4037] mb-2">
+        {name}
+      </h3>
+
       {/* Product Image */}
       <img
         src={fullImageUrl}
-        alt="Product"
+        alt={name}
         className="w-[190px] h-[160px] object-contain mb-2"
       />
 

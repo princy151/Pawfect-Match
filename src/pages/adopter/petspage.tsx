@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../assets/common/navbar";
 import { DogCard } from "../../assets/common/card";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 interface Pet {
   _id: string;
@@ -74,10 +75,11 @@ const PetsPage: React.FC = () => {
               </div>
             ))}
           </div>
-
+            <Link to="/adopterpetstwo">
           <button className="ml-120 text-sm mt-4 px-5 py-2 rounded-full bg-white text-gray-600 hover:underline w-fit text-center shadow-md">
             more →
           </button>
+          </Link>
         </div>
       </div>
     </div>

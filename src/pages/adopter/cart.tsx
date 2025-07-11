@@ -20,12 +20,10 @@ const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<Product | null>(null); // 🆕
   const BASE_URL = 'http://localhost:3000';
-
-  // Get logged-in user ID from localStorage
   const userId = localStorage.getItem('adopterId');
 
-  // Fetch cart items on mount
   useEffect(() => {
     if (!userId) {
       setError('Please login to see your cart.');
@@ -48,36 +46,36 @@ const CartPage: React.FC = () => {
     }
   };
 
-  const handleDelete = async (cartItemId: string) => {
-    if (!userId) return alert('Please login first.');
+  const confirmDelete = (product: Product) => {
+    setItemToDelete(product); // 🆕
+  };
+
+  const cancelDelete = () => {
+    setItemToDelete(null); // 🆕
+  };
+
+  const handleDelete = async () => {
+    if (!userId || !itemToDelete) return;
     try {
-      await axios.delete(`${BASE_URL}/api/v1/cart/${userId}/remove/${cartItemId}`);
-      setCartItems((prev) => prev.filter((item) => item._id !== cartItemId));
+      await axios.delete(`${BASE_URL}/api/v1/cart/${userId}/remove/${itemToDelete._id}`);
+      setCartItems((prev) => prev.filter((item) => item.product._id !== itemToDelete._id));
+      setItemToDelete(null);
     } catch (err) {
       console.error('Failed to delete cart item:', err);
       alert('Failed to delete item.');
     }
   };
 
-  const subtotal = Array.isArray(cartItems)
-    ? cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
-    : 0;
-
-  const totalItems = Array.isArray(cartItems)
-    ? cartItems.reduce((acc, item) => acc + item.quantity, 0)
-    : 0;
+  const subtotal = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   if (loading) return <p className="text-center mt-20">Loading cart...</p>;
   if (error) return <p className="text-center mt-20 text-red-600">{error}</p>;
 
   return (
     <div className="min-h-screen bg-[#FFFDFB] font-[Abhaya_Libre] relative">
-      {/* Background Image Behind Content */}
-      <img
-        src="src/assets/images/emptybg.png"
-        alt="Background"
-        className="absolute inset-0 w-full h-full object-cover opacity-10 z-0"
-      />
+      {/* Background */}
+      <img src="src/assets/images/emptybg.png" alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-10 z-0" />
 
       <div className="relative z-10">
         <Navbar />
@@ -98,7 +96,6 @@ const CartPage: React.FC = () => {
                   key={item._id}
                   className="flex items-center justify-between mb-6 border border-[#D67D3E] rounded-md p-3 shadow-sm"
                 >
-                  {/* Image and Info */}
                   <div className="flex items-center gap-4">
                     <img
                       src={`${BASE_URL}/uploads/${item.product.image}`}
@@ -110,13 +107,11 @@ const CartPage: React.FC = () => {
                       <p>Qty. {item.quantity}</p>
                     </div>
                   </div>
-                  {/* Price and Delete */}
                   <div className="text-sm flex items-center gap-3">
                     <p className="text-black">Rs {(item.product.price * item.quantity).toFixed(2)}</p>
                     <button
-                      onClick={() => handleDelete(item._id)}
+                      onClick={() => confirmDelete(item.product)} // 🆕
                       className="text-red-600 hover:text-red-800"
-                      aria-label={`Delete ${item.product.name} from cart`}
                     >
                       <FaTrashAlt />
                     </button>
@@ -129,7 +124,6 @@ const CartPage: React.FC = () => {
           {/* Right - Order Summary */}
           <div className="border-2 border-[#C15327] rounded-xl p-6 bg-[#FFFAF5]">
             <h2 className="text-3xl font-bold text-center text-[#2F1103] mb-6">Order Summary</h2>
-
             <div className="space-y-2 text-l text-black font-medium mb-6">
               <p>Total items: {totalItems}</p>
               <p>Subtotal: Rs {subtotal.toFixed(2)}</p>
@@ -146,23 +140,12 @@ const CartPage: React.FC = () => {
 
             <div className="flex items-center gap-4 mb-6">
               <a href="https://esewa.com.np" target="_blank" rel="noopener noreferrer">
-                <img
-                  src="src/assets/images/esewa.png"
-                  alt="Esewa"
-                  className="w-10 h-10 cursor-pointer"
-                />
+                <img src="src/assets/images/esewa.png" alt="Esewa" className="w-10 h-10 cursor-pointer" />
               </a>
               <a href="https://khalti.com" target="_blank" rel="noopener noreferrer">
-                <img
-                  src="src/assets/images/Khalti.png"
-                  alt="Khalti"
-                  className="w-20 h-13 cursor-pointer"
-                />
+                <img src="src/assets/images/Khalti.png" alt="Khalti" className="w-20 h-13 cursor-pointer" />
               </a>
-
-              {/* Vertical Divider */}
               <div className="h-15 border-l border-gray-400"></div>
-
               <span className="ml-2 text-sm">Cash on delivery</span>
             </div>
 
@@ -172,6 +155,31 @@ const CartPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* 🆕 Delete Confirmation Modal */}
+      {itemToDelete && (
+        <div className="fixed inset-0 flex justify-center items-center z-50"  style={{ backgroundColor: 'rgba(5, 5, 5, 0.6)' }}  >
+          <div className="bg-white rounded-xl shadow-lg w-full max-w-md p-6">
+            <h3 className="text-lg font-bold text-center mb-4 text-[#2F1103]">
+              Are you sure you want to remove <span className="text-[#C15327]">{itemToDelete.name}</span> from your cart?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={handleDelete}
+                className="px-6 py-2 rounded-full bg-red-600 text-white font-semibold hover:bg-red-700"
+              >
+                Yes, Remove
+              </button>
+              <button
+                onClick={cancelDelete}
+                className="px-6 py-2 rounded-full bg-gray-300 text-gray-800 font-semibold hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

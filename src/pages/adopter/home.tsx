@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../../assets/common/navbar';
 import profileMan from '../../assets/images/profileman.png'; // 👈 import the image
+import { Link } from 'react-router-dom';
 
 const AHomePage: React.FC = () => {
   const [showPetsDropdown, setShowPetsDropdown] = useState(false);
@@ -11,6 +12,7 @@ const AHomePage: React.FC = () => {
       <Navbar />
 
       {/* 👤 Profile Man Icon on Top-Right Below Navbar */}
+      <Link to="/adopterprofile">
       <div className="absolute top-25 right-10 z-50">
         <img
           src={profileMan}
@@ -18,6 +20,7 @@ const AHomePage: React.FC = () => {
           className="w-10 h-10 object-cover rounded-full"
         />
       </div>
+      </Link>
 
       {/* Main Section */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-10">
@@ -28,9 +31,11 @@ const AHomePage: React.FC = () => {
             <p className="text-black mb-6 text-2xl">
               Open your doors and hearts to pets in need of a home and it will be thankful to you for the rest of their lives.
             </p>
+            <Link to="/adopterpets">
             <button className="bg-white px-6 py-3 w-35 rounded-full font-homejae text-xl shadow hover:shadow-md flex items-center gap-2 font-medium drop-shadow-lg">
               EXPLORE →
             </button>
+            </Link>
           </div>
 
           {/* Paw prints */}

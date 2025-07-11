@@ -62,6 +62,7 @@ const ARegister: React.FC = () => {
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#fefefe] px-4">
+      
       <img
         src="src/assets/images/emptybg.png"
         alt="Background"
