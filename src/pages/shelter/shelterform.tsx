@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SNavbar from '../../assets/common/snavbar';
+import AdopterFormImg from '../../assets/images/AdopterForm.png';
+import FormIcon1 from '../../assets/images/FormIcon1.png';
+import FormIcon2 from '../../assets/images/FormIcon2.png';
+import FormIcon3 from '../../assets/images/FormIcon3.png';
+import FormCalendar from '../../assets/images/FormCalender.png';
+import FormClock from '../../assets/images/FormClock.png';
 
 const SAdoptionForm: React.FC = () => {
   const { formId } = useParams<{ formId: string }>();
@@ -40,9 +46,9 @@ const SAdoptionForm: React.FC = () => {
             city: data.city || '',
             province: data.province || '',
             houseNo: data.houseNo || '',
-            ownPets: data.ownPets || '',
-            ownOrRent: data.ownOrRent || '',
-            raisedBefore: data.raisedBefore || '',
+            ownPets: data.ownPets?.toString().toLowerCase() === 'true' || data.ownPets?.toLowerCase() === 'yes' ? 'Yes' : 'No',
+            ownOrRent: data.ownOrRent?.toLowerCase() === 'own' ? 'Own' : 'Rent',
+            raisedBefore: (data.raisedBefore?.toString().toLowerCase() === 'true' || data.raisedBefore?.toString().toLowerCase() === 'yes') ? 'Yes' : 'No',
             appointmentDate: data.appointmentDate || '',
             appointmentTimeHours: data.appointmentTimeHours || '',
             appointmentTimeMinutes: data.appointmentTimeMinutes || '',
@@ -87,7 +93,7 @@ const SAdoptionForm: React.FC = () => {
       {/* Header Image */}
       <div className="w-full">
         <img
-          src="src/assets/images/AdopterForm.png"
+          src={AdopterFormImg}
           alt="Adoption"
           className="w-full h-auto object-cover"
         />
@@ -154,7 +160,7 @@ const SAdoptionForm: React.FC = () => {
           <p className="text-lg md:text-xl font-semibold" style={{ fontFamily: 'Abhaya Libre SemiBold' }}>
             Let's proceed towards the next step
           </p>
-          <img src="src/assets/images/FormIcon1.png" alt="Step 1" className="w-8 h-8 md:w-10 md:h-10" />
+          <img src={FormIcon1} alt="Step 1" className="w-8 h-8 md:w-10 md:h-10" />
         </div>
 
         {/* Address Information */}
@@ -215,7 +221,7 @@ const SAdoptionForm: React.FC = () => {
           <p className="text-lg md:text-xl font-semibold" style={{ fontFamily: 'Abhaya Libre SemiBold' }}>
             Now one last step to adopt me
           </p>
-          <img src="src/assets/images/FormIcon2.png" alt="Step 2" className="w-8 h-8 md:w-10 md:h-10" />
+          <img src={FormIcon2} alt="Step 2" className="w-8 h-8 md:w-10 md:h-10" />
         </div>
 
         {/* Extra Information */}
@@ -281,7 +287,7 @@ const SAdoptionForm: React.FC = () => {
                   <input
                     type="radio"
                     name="raisedBefore"
-                    checked={formData.raisedBefore === 'Yes'}
+                    checked={formData.raisedBefore === 'true'}
                     readOnly
                     disabled
                     className="mr-2"
@@ -292,7 +298,7 @@ const SAdoptionForm: React.FC = () => {
                   <input
                     type="radio"
                     name="raisedBefore"
-                    checked={formData.raisedBefore === 'No'}
+                    checked={formData.raisedBefore === 'true'}
                     readOnly
                     disabled
                     className="mr-2"
@@ -309,7 +315,7 @@ const SAdoptionForm: React.FC = () => {
           <p className="text-lg md:text-xl font-semibold" style={{ fontFamily: 'Abhaya Libre SemiBold' }}>
             OOPS! Forgot to mention the date
           </p>
-          <img src="src/assets/images/FormIcon3.png" alt="Step 3" className="w-8 h-8 md:w-10 md:h-10" />
+          <img src={FormIcon3} alt="Step 3" className="w-8 h-8 md:w-10 md:h-10" />
         </div>
 
         {/* Appointment Date */}
@@ -331,7 +337,7 @@ const SAdoptionForm: React.FC = () => {
                   readOnly
                 />
                 <img
-                  src="src/assets/images/FormCalender.png"
+                  src={FormCalendar}
                   alt="Calendar"
                   className="w-5 h-5 ml-2"
                 />
@@ -362,7 +368,7 @@ const SAdoptionForm: React.FC = () => {
                 />
               </div>
               <img
-                src="src/assets/images/FormClock.png"
+                src={FormClock}
                 alt="Clock"
                 className="w-5 h-5 ml-3"
               />
@@ -403,11 +409,10 @@ const SAdoptionForm: React.FC = () => {
                   if (showConfirm.type === 'approve') confirmApprove();
                   else confirmDeny();
                 }}
-                className={`px-6 py-2 rounded-xl font-semibold text-[#E7DAD1] transition ${
-                  showConfirm.type === 'approve'
-                    ? 'bg-[#6B9D72] hover:bg-[#476C4D]'
-                    : 'bg-[#C93838] hover:bg-[#9D2828]'
-                }`}
+                className={`px-6 py-2 rounded-xl font-semibold text-[#E7DAD1] transition ${showConfirm.type === 'approve'
+                  ? 'bg-[#6B9D72] hover:bg-[#476C4D]'
+                  : 'bg-[#C93838] hover:bg-[#9D2828]'
+                  }`}
               >
                 Yes, {showConfirm.type === 'approve' ? 'Approve' : 'Deny'}
               </button>

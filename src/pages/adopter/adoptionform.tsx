@@ -25,6 +25,8 @@ const AdoptionForm: React.FC = () => {
 
   const [citizenshipImage, setCitizenshipImage] = useState<File | null>(null);
   const [mapImage, setMapImage] = useState<File | null>(null);
+  const [citizenshipPreview, setCitizenshipPreview] = useState<string | null>(null);
+  const [mapPreview, setMapPreview] = useState<string | null>(null);
 
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -89,7 +91,23 @@ const AdoptionForm: React.FC = () => {
               <input name="phone" onChange={handleChange} type="tel" placeholder="Phone no." className="bg-white border border-[#A7522A] p-3 rounded-xl" />
             </div>
             <div className="w-full md:w-1/2 flex flex-col items-center justify-center border-2 border-dashed border-black rounded-xl p-6 bg-white text-center">
-              <input type="file" onChange={(e) => setCitizenshipImage(e.target.files?.[0] || null)} />
+              <input
+                type="file"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    setCitizenshipImage(file);
+                    setCitizenshipPreview(URL.createObjectURL(file));
+                  }
+                }}
+              />
+              {citizenshipPreview && (
+                <img
+                  src={citizenshipPreview}
+                  alt="Preview"
+                  className="mt-2 rounded-lg max-w-full max-h-48 object-contain"
+                />
+              )}
               <p className="text-xs text-[#A7522A] mt-2 italic">*Must Upload Citizenship image</p>
             </div>
           </div>
@@ -114,7 +132,23 @@ const AdoptionForm: React.FC = () => {
               <input name="houseNo" onChange={handleChange} type="text" placeholder="House no." className="bg-white border border-[#A7522A] p-3 rounded-xl" />
             </div>
             <div className="w-full md:w-1/2 flex flex-col items-center justify-center border-2 border-dashed border-black rounded-xl p-6 bg-white text-center">
-              <input type="file" onChange={(e) => setMapImage(e.target.files?.[0] || null)} />
+              <input
+                type="file"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    setMapImage(file);
+                    setMapPreview(URL.createObjectURL(file));
+                  }
+                }}
+              />
+              {mapPreview && (
+                <img
+                  src={mapPreview}
+                  alt="Preview"
+                  className="mt-2 rounded-lg max-w-full max-h-48 object-contain"
+                />
+              )}
               <p className="text-xs text-[#A7522A] mt-2 italic">*Must Upload image from map</p>
             </div>
           </div>

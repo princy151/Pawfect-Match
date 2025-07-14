@@ -33,11 +33,11 @@ const router = createBrowserRouter([
 
   {
     path: '/',
-    element: < LandingPage />,
+    element: < OnboardingSinglePage/>,
   },
    {
     path: '/onboarding',
-    element: < OnboardingSinglePage />,
+    element: <LandingPage />,
   },
 
 

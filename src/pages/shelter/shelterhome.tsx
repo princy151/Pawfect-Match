@@ -91,33 +91,32 @@ const ShelterHomePage: React.FC = () => {
           <img
             src="src/assets/images/logout.png"
             alt="Logout"
-            className="w-6 h-6"
+            className="w-10 h-10"
           />
         </button>
 
         <div className="absolute inset-0"></div>
 
-        <div className="relative z-10 px-6 md:px-12 lg:pl-24 flex flex-col md:flex-row items-start justify-start w-full">
-          <div className="space-y-6 max-w-2xl text-black">
-            <h2 className="text-5xl md:text-6xl font-extrabold leading-tight tracking-wide">
-              Help Them Find<br />a Forever Home.
-            </h2>
-            <p className="text-lg md:text-xl font-medium">
-              Every paw deserves a place to belong. Partner with us to give rescue pets the love, care,
-              and second chance they’ve been waiting for.
-            </p>
-            <button
-              onClick={() => navigate('/shelterpets')}
-              className="bg-[#A7522A] text-white font-extrabold text-lg px-6 py-3 rounded-xl hover:bg-[#E7DAD1] hover:text-black transition drop-shadow-lg"
-            >
-              LIST A PET
-            </button>
-            <div className="mt-6 space-y-1 text-md md:text-lg font-extrabold">
-              <p>🐾 800+ Pets Listed</p>
-              <p>🐾 120 Shelters Partnered</p>
-              <p>🐾 18K+ Lives Touched</p>
-            </div>
+        <div className="relative z-10 px-6 md:px-12 lg:pl-24 flex flex-col md:flex-col-reverse items-start justify-start w-full mt-[-140px]">          <div className="space-y-6 max-w-2xl text-black">
+          <h2 className="text-5xl md:text-6xl font-extrabold leading-tight tracking-wide">
+            Help Them Find<br />a Forever Home.
+          </h2>
+          <p className="text-lg md:text-xl font-medium">
+            Every paw deserves a place to belong. Partner with us to give rescue pets the love, care,
+            and second chance they’ve been waiting for.
+          </p>
+          <button
+            onClick={() => navigate('/shelterpets')}
+            className="bg-[#A7522A] text-white font-extrabold text-lg px-6 py-3 rounded-xl hover:bg-[#E7DAD1] hover:text-black transition drop-shadow-lg"
+          >
+            LIST A PET
+          </button>
+          <div className="mt-6 space-y-1 text-md md:text-lg font-extrabold">
+            <p>🐾 800+ Pets Listed</p>
+            <p>🐾 120 Shelters Partnered</p>
+            <p>🐾 18K+ Lives Touched</p>
           </div>
+        </div>
         </div>
       </section>
 

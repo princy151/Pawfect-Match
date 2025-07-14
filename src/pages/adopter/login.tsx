@@ -48,7 +48,7 @@ const handleLogin = async (e: React.FormEvent) => {
   return (
     <div className="min-h-screen relative bg-white px-4 py-10 flex items-center justify-center">
       <button
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/onboarding')}
         className="absolute top-6 left-6 text-[#A7522A] hover:text-orange-600 text-xl font-bold"
         style={{ fontFamily: "'Bowlby One SC', cursive" }}
       >

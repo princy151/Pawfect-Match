@@ -44,11 +44,11 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-white px-10 py-8 flex justify-between items-center font-hind z-100">
+    <nav className="px-10 py-8 flex justify-between items-center font-hind z-100" style={{ backgroundColor: 'rgba(5, 5, 5, 0)' }}>
       {/* Logo */}
       <div
         className="flex items-center gap-2 text-2xl font-[Abhaya_Libre] font-bold text-black z-100 cursor-pointer"
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/adopterhome')}
       >
         <span role="img" aria-label="paw">🐾</span> Pawfect Match
       </div>

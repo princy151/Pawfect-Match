@@ -48,7 +48,7 @@ const SNavbar: React.FC = () => {
       {/* Logo */}
       <div
         className="flex items-center gap-2 text-2xl font-[Abhaya_Libre] font-bold text-black z-100 cursor-pointer"
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/shelterhome')}
       >
         <span role="img" aria-label="paw">🐾</span> Pawfect Match
       </div>

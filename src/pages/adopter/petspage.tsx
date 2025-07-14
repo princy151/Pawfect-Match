@@ -30,10 +30,13 @@ const PetsPage: React.FC = () => {
 
   return (
     <div className="relative w-full min-h-screen bg-white overflow-hidden">
-      <Navbar />
+      <div className="relative z-21">
+        <Navbar />
+
+      </div>
 
       {/* Background Image */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="absolute inset-0 z-20 pointer-events-none">
         <img
           src="src/assets/images/PetsPageMain.png"
           alt="Woman and Dog"
@@ -55,8 +58,8 @@ const PetsPage: React.FC = () => {
         </div>
 
         {/* Right Dog Cards */}
-        <div>
-          <h2 className="text-3xl font-semibold text-gray-600 bg-neutral-50 rounded-xl px-6 py-3 shadow-lg text-center font-[Abhaya_Libre] w-full mx-auto mb-6">
+        <div className="relative z-0">
+          <h2 className="text-3xl z-0 font-semibold text-gray-600 bg-neutral-50 rounded-xl px-6 py-3 shadow-lg text-center font-[Abhaya_Libre] w-full mx-auto mb-6">
             Pets available for Adoption
           </h2>
           <div className="grid grid-cols-2 grid-rows-3 gap-4">
@@ -75,10 +78,10 @@ const PetsPage: React.FC = () => {
               </div>
             ))}
           </div>
-            <Link to="/adopterpetstwo">
-          <button className="ml-120 text-sm mt-4 px-5 py-2 rounded-full bg-white text-gray-600 hover:underline w-fit text-center shadow-md">
-            more →
-          </button>
+          <Link to="/adopterpetstwo">
+            <button className="ml-120 text-sm mt-4 px-5 py-2 rounded-full bg-white text-gray-600 hover:underline w-fit text-center shadow-md">
+              more →
+            </button>
           </Link>
         </div>
       </div>

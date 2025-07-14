@@ -24,6 +24,7 @@ const ShopPage: React.FC = () => {
     isFeatured: false,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
   const [showConfirm, setShowConfirm] = useState<{ show: boolean; id: string | null }>({
     show: false,
@@ -47,15 +48,26 @@ const ShopPage: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target;
+    const newValue = type === "checkbox" && e.target instanceof HTMLInputElement
+      ? e.target.checked
+      : value;
+
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" && e.target instanceof HTMLInputElement ? e.target.checked : value,
+      [name]: newValue,
     }));
+
+    // Disable discount if isFeatured is unchecked
+    if (name === "isFeatured" && !newValue) {
+      setFormData((prev) => ({ ...prev, discount: "" }));
+    }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setImageFile(e.target.files[0]);
+      const file = e.target.files[0];
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -70,7 +82,7 @@ const ShopPage: React.FC = () => {
       data.append("name", formData.name);
       data.append("description", formData.description);
       data.append("price", formData.price);
-      data.append("discount", formData.discount ? `-${formData.discount}%` : "0%");
+      data.append("discount", formData.discount ? `-${formData.discount}%` : "-0%");
       data.append("isFeatured", String(formData.isFeatured));
       if (imageFile) data.append("image", imageFile);
 
@@ -90,6 +102,7 @@ const ShopPage: React.FC = () => {
         isFeatured: false,
       });
       setImageFile(null);
+      setImagePreview(null);
       setEditingProductId(null);
       fetchProducts();
     } catch (err) {
@@ -123,6 +136,7 @@ const ShopPage: React.FC = () => {
       isFeatured: product.isFeatured || false,
     });
     setImageFile(null);
+    setImagePreview(`http://localhost:3000/uploads/${product.image}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -133,6 +147,7 @@ const ShopPage: React.FC = () => {
 
       <div className="text-2xl mb-4 ml-8">←</div>
 
+      {/* Form Section */}
       <div className="rounded-4xl p-6 max-w-4xl mx-auto mb-20 bg-[#FFFDFB] border border-[#A7522A] drop-shadow-md">
         <h2 className="text-xl font-semibold mb-4">Item details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -143,11 +158,39 @@ const ShopPage: React.FC = () => {
           </div>
           <div className="space-y-3 flex flex-col justify-between">
             <input type="file" onChange={handleImageChange} className="w-full border p-2 rounded" accept="image/*" />
-            <div className="flex gap-3 items-center">
-              <input name="discount" value={formData.discount} onChange={handleInputChange} placeholder="Discount %" className="w-24 border p-2 rounded" />
-              <input name="isFeatured" type="checkbox" checked={formData.isFeatured} onChange={handleInputChange} className="w-5 h-5" />
-              <label className="text-sm">Featured</label>
+
+            {imagePreview && (
+              <div className="flex justify-center items-center mt-2">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="w-[220px] h-[220px] object-cover rounded-lg border border-gray-300 shadow-md"
+                />
+              </div>
+            )}
+
+            <div className="flex items-center gap-3">
+              <input
+                name="isFeatured"
+                type="checkbox"
+                checked={formData.isFeatured}
+                onChange={handleInputChange}
+                className="w-5 h-5"
+              />
+              <label className="text-sm select-none">Featured</label>
+
+              {/* Conditionally show discount input inline, with a fixed width */}
+              {formData.isFeatured && (
+                <input
+                  name="discount"
+                  value={formData.discount}
+                  onChange={handleInputChange}
+                  placeholder="Discount %"
+                  className="w-24 border p-2 rounded"
+                />
+              )}
             </div>
+
           </div>
         </div>
         <div className="text-center mt-6">
@@ -157,6 +200,7 @@ const ShopPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Product Display */}
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl font-semibold mb-4 ml-10 font-[Abhaya_Libre]">Featured Products</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center px-10 mb-10">
@@ -193,7 +237,7 @@ const ShopPage: React.FC = () => {
 
       {/* Confirmation Modal */}
       {showConfirm.show && (
-        <div className="fixed inset-0 flex items-center justify-center z-50"  style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+        <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(5, 5, 5, 0.6)' }}>
           <div className="bg-white p-8 rounded-xl shadow-2xl w-[90%] max-w-md text-center">
             <h3 className="text-xl font-bold mb-4 text-gray-800">Are you sure you want to delete this product?</h3>
             <div className="flex justify-center space-x-4">
@@ -204,7 +248,7 @@ const ShopPage: React.FC = () => {
         </div>
       )}
 
-      {/* Toast */}
+      {/* Toast Message */}
       {toastMessage && (
         <div className={`fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg font-medium z-50 text-white transition-all duration-300
           ${toastMessage.type === "success" ? "bg-green-600" : "bg-red-600"}`}>

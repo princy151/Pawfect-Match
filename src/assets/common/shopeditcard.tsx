@@ -37,9 +37,11 @@ const ShopECard: React.FC<ShopCardProps> = ({
       />
 
       {/* Price + Discount */}
-      <div className="flex items-center w-full gap-2 mt-2">
+      <div className="flex items-center justify-center w-full gap-2 mt-2">
         <div className="bg-gray-200 shadow px-4 py-1 rounded text-sm font-semibold">{price}</div>
-        <div className="text-sm font-bold text-black">{discount}</div>
+        {discount !== "-0%" && (
+          <div className="text-sm font-bold text-black">{discount}</div>
+        )}
       </div>
 
       {/* Product Description */}

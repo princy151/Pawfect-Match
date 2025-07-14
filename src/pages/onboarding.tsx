@@ -54,7 +54,7 @@ const OnboardingSinglePage: React.FC = () => {
         >
             <div className="absolute top-4 right-6 z-10">
                 <button
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate("/onboarding")}
                     className="font-semibold hover:underline text-lg"
                     style={{ color: accentColor }}
                 >
@@ -188,7 +188,7 @@ const OnboardingSinglePage: React.FC = () => {
 
                             <div className="text-center">
                                 <button
-                                    onClick={() => navigate("/")}
+                                    onClick={() => navigate("/onboarding")}
                                     className="mt-12 px-12 py-4 rounded-xl text-xl font-semibold transition"
                                     style={{ backgroundColor: accentColor, color: "white" }}
                                 >
