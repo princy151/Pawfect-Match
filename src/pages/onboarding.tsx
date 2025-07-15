@@ -26,8 +26,8 @@ const OnboardingSinglePage: React.FC = () => {
     ];
 
     const shelterSteps = [
-         { emoji: "📝", title: "Create Account", desc: "Register as a shelter." },
-         { emoji: "🔐", title: "Login", desc: "Access your profile securely." },
+        { emoji: "📝", title: "Create Account", desc: "Register as a shelter." },
+        { emoji: "🔐", title: "Login", desc: "Access your profile securely." },
         { emoji: "➕", title: "Add Pets", desc: "List pets available for adoption." },
         { emoji: "🛒", title: "Manage Shop", desc: "Add, edit, or delete shop items." },
         { emoji: "✏️", title: "Edit Listings", desc: "Keep pet info accurate and updated." },
@@ -74,7 +74,7 @@ const OnboardingSinglePage: React.FC = () => {
                             className="text-center"
                         >
                             <h1 className="text-5xl font-bold mb-6" style={{ color: accentColor }}>
-                                🐾 Welcome to PawPal
+                                🐾 Welcome to Pawfect Match
                             </h1>
                             <p className="mb-10 text-gray-700 text-xl max-w-xl mx-auto">
                                 Find or help a furry friend today
@@ -136,7 +136,7 @@ const OnboardingSinglePage: React.FC = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {/* Adopter Steps */}
-                                <section>   
+                                <section>
                                     <p className="mb-6 font-semibold text-lg" style={{ color: accentColor }}>
                                         Click on:<br />
                                         👉 I am an adopter
