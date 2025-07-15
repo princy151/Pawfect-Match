@@ -65,7 +65,7 @@ const SAdoptionForm: React.FC = () => {
   const confirmApprove = async () => {
     try {
       await axios.delete(`http://localhost:3000/api/v1/adoption/${formId}`);
-      setMessage('Adoption form approved and deleted successfully!');
+      setMessage('Adoption form approved successfully!');
       setShowConfirm({ type: null });
       setTimeout(() => navigate('/shelterhome'), 2000);
     } catch {

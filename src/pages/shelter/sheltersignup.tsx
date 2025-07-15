@@ -162,12 +162,12 @@ const SRegister: React.FC = () => {
           </div>
 
           {/* Upload Profile Picture - Skipped for now */}
-          <div className="md:col-span-1 border-2 border-dashed border-gray-400 h-40 flex items-center justify-center rounded-xl text-center text-gray-400 bg-white">
+          {/* <div className="md:col-span-1 border-2 border-dashed border-gray-400 h-40 flex items-center justify-center rounded-xl text-center text-gray-400 bg-white">
             <span className="text-sm font-semibold">Profile picture upload<br />is not implemented yet</span>
-          </div>
+          </div> */}
 
           {/* Submit Button */}
-          <div className="md:col-span-1 flex items-center justify-center">
+          <div className="md:col-span-1 flex items-center justify-center ml-150 mt-10">
             <button
               type="submit"
               disabled={loading}

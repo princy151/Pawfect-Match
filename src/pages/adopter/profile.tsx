@@ -172,7 +172,7 @@ const ProfilePage: React.FC = () => {
             </div>
 
             {/* Right Buttons */}
-            <div className="flex flex-col justify-between flex-1 font-semibold mt-20 text-center h-full">
+            <div className="flex flex-col justify-between flex-1 font-semibold mt-30 text-center h-full">
               <div className="flex flex-col gap-7">
                 <button className="border px-4 py-3 rounded-lg hover:bg-gray-100 transition" onClick={() => navigate(`/adopterhome`)}>
                   Back to Home Page
@@ -180,10 +180,6 @@ const ProfilePage: React.FC = () => {
 
                 <button className="border px-4 py-3 rounded-lg hover:bg-gray-100 transition" onClick={() => navigate(`/adoptercart`)}>
                   Visit your Cart
-                </button>
-
-                <button className="border px-4 py-3 rounded-lg hover:bg-gray-100 transition" onClick={() => navigate(``)}>
-                  View your Adoption Form
                 </button>
               </div>
 

@@ -60,7 +60,7 @@ const PetsPage: React.FC = () => {
         {/* Right Dog Cards */}
         <div className="relative z-0">
           <h2 className="text-3xl z-0 font-semibold text-gray-600 bg-neutral-50 rounded-xl px-6 py-3 shadow-lg text-center font-[Abhaya_Libre] w-full mx-auto mb-6">
-            Pets available for Adoption
+            Preview of some pets
           </h2>
           <div className="grid grid-cols-2 grid-rows-3 gap-4">
             {pets.map((pet) => (

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DogCard } from '../../assets/common/card';
 import Navbar from '../../assets/common/navbar';
+import { Link } from 'react-router-dom';
 
 interface Pet {
   _id: string;
@@ -112,9 +113,11 @@ const FavoritePetsPage: React.FC = () => {
               <p><strong>Description:</strong> A loving companion looking for a forever home.</p>
             </div>
             <div className="mt-6 text-right">
+              <Link to={`/adopterform/686a876c5031e1a46eb921a2`}>
               <button className="bg-[#A7522A] text-[#E7DAD1] px-5 py-2 font-bowlby rounded-2xl hover:bg-[#934622] transition">
                 View Adoption Form
               </button>
+              </Link>
             </div>
           </div>
         )}

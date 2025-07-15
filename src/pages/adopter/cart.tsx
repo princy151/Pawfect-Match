@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaTrashAlt } from 'react-icons/fa';
 import Navbar from '../../assets/common/navbar';
+import { Link } from 'react-router-dom';
 
 interface Product {
   _id: string;
@@ -148,17 +149,18 @@ const CartPage: React.FC = () => {
               <div className="h-15 border-l border-gray-400"></div>
               <span className="ml-2 text-sm">Cash on delivery</span>
             </div>
-
-            <button className="w-20 bg-[#A7522A] ml-45 text-[#E7DAD1] py-2 rounded-2xl font-extrabold tracking-wide hover:bg-[#843e1c] transition">
-              DONE
-            </button>
+            <Link to={"/adoptershop"}>
+              <button className="w-20 bg-[#A7522A] ml-45 text-[#E7DAD1] py-2 rounded-2xl font-extrabold tracking-wide hover:bg-[#843e1c] transition">
+                DONE
+              </button>
+            </Link>
           </div>
         </div>
       </div>
 
       {/* 🆕 Delete Confirmation Modal */}
       {itemToDelete && (
-        <div className="fixed inset-0 flex justify-center items-center z-50"  style={{ backgroundColor: 'rgba(5, 5, 5, 0.6)' }}  >
+        <div className="fixed inset-0 flex justify-center items-center z-50" style={{ backgroundColor: 'rgba(5, 5, 5, 0.6)' }}  >
           <div className="bg-white rounded-xl shadow-lg w-full max-w-md p-6">
             <h3 className="text-lg font-bold text-center mb-4 text-[#2F1103]">
               Are you sure you want to remove <span className="text-[#C15327]">{itemToDelete.name}</span> from your cart?

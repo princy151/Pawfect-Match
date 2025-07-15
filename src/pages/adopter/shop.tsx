@@ -4,6 +4,7 @@ import Navbar from '../../assets/common/navbar';
 import ShopCard from '../../assets/common/shopcard';
 
 interface Product {
+  description: string;
   _id: string;
   name: string;
   price: string;
@@ -93,13 +94,14 @@ const AShop: React.FC = () => {
         <h2 className="text-4xl font-semibold mb-4 ml-35 font-[Abhaya_Libre]">Offer Products</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center px-30">
           {products
-            .filter((p) => p.discount && p.discount !== '0%')
+            .filter((p) => p.discount && p.discount !== '-0%')
             .map((product) => (
               <ShopCard
                 key={product._id}
                 imageUrl={`${BASE_URL}/uploads/${product.image}`}
                 price={product.price}
                 discount={product.discount || ''}
+                description={product.description || 'No description available'}
                 onAddToCart={() => openQuantityModal(product._id)}
               />
             ))}
@@ -110,15 +112,18 @@ const AShop: React.FC = () => {
       <section className="px-6 py-4">
         <h2 className="text-4xl font-semibold mb-4 ml-35 font-[Abhaya_Libre]">More Products</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center px-30">
-          {products.map((product) => (
-            <ShopCard
-              key={product._id}
-              imageUrl={`${BASE_URL}/uploads/${product.image}`}
-              price={product.price}
-              discount={product.discount || ''}
-              onAddToCart={() => openQuantityModal(product._id)}
-            />
-          ))}
+          {products
+            .filter((p) => !p.discount || p.discount === '-0%')
+            .map((product) => (
+              <ShopCard
+                key={product._id}
+                imageUrl={`${BASE_URL}/uploads/${product.image}`}
+                price={product.price}
+                discount={product.discount || ''}
+                description={product.description || 'No description available'}
+                onAddToCart={() => openQuantityModal(product._id)}
+              />
+            ))}
         </div>
       </section>
 
