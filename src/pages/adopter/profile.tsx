@@ -72,7 +72,7 @@ const ProfilePage: React.FC = () => {
             {/* Profile Card */}
             <div className="relative flex flex-col items-start bg-[#FFFDFB] border-2 border-[#A7522A] rounded-4xl p-6 flex-1">
               <img
-                src="src/assets/images/profile.png"
+                src="src/assets/images/shubu.png"
                 alt="Profile"
                 className="w-40 h-40 object-cover rounded-md mb-4 mx-auto"
               />

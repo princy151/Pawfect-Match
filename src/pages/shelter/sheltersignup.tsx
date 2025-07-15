@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SRegister: React.FC = () => {
   const [formData, setFormData] = useState({
     sheltername: '',
     location: '',
-    ed: '',
+    ed: '', // YYYY-MM-DD
     phone: '',
     email: '',
     password: '',
-    image: '', // send empty string or null for now
+    image: '',
   });
 
   const [message, setMessage] = useState('');
+  const [popupType, setPopupType] = useState<'success' | 'error'>('success');
+  const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,9 +26,13 @@ const SRegister: React.FC = () => {
 
   const handleEDChange = (index: number, value: string) => {
     const parts = formData.ed ? formData.ed.split('-') : ['', '', ''];
-    parts[index] = value.padStart(index === 0 ? 4 : 2, '0'); // index 0 = YYYY
+    parts[index] = value.padStart(index === 0 ? 4 : 2, '0');
     const ed = `${parts[0]}-${parts[1]}-${parts[2]}`;
     setFormData((prev) => ({ ...prev, ed }));
+  };
+
+  const handleDatePickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, ed: e.target.value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,10 +47,19 @@ const SRegister: React.FC = () => {
         },
       });
 
+      setPopupType('success');
       setMessage('Registration successful!');
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+        navigate('/shelterlogin'); 
+      }, 3000);
       console.log(res.data);
     } catch (err: any) {
+      setPopupType('error');
       setMessage(err.response?.data?.message || 'Registration failed');
+      setShowPopup(true);
+      setTimeout(() => setShowPopup(false), 3000);
     } finally {
       setLoading(false);
     }
@@ -62,9 +79,8 @@ const SRegister: React.FC = () => {
         </h2>
 
         <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
-          {/* Shelter Name */}
           <div>
-            <label className="block text-xs font-extrabold uppercase mb-1 tracking-wider">Shelter Name</label>
+            <label className="block text-xs font-extrabold uppercase mb-1 tracking-wider">Name</label>
             <input
               type="text"
               name="sheltername"
@@ -76,7 +92,6 @@ const SRegister: React.FC = () => {
             />
           </div>
 
-          {/* Location */}
           <div>
             <label className="block text-xs font-bold uppercase mb-1 tracking-wider">Location</label>
             <input
@@ -90,31 +105,42 @@ const SRegister: React.FC = () => {
             />
           </div>
 
-          {/* Establishment Date + Email */}
           <div className="md:col-span-2 flex flex-col md:flex-row gap-6">
             <div className="flex-1">
               <label className="block text-xs font-bold uppercase mb-1 tracking-wider">Establishment Date</label>
-              <div className="flex gap-3">
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-3">
+                  <input
+                    type="text"
+                    maxLength={4}
+                    placeholder="YYYY"
+                    value={formData.ed.split('-')[0] || ''}
+                    onChange={(e) => handleEDChange(0, e.target.value)}
+                    className="bg-white w-1/3 border border-gray-300 px-3 py-3 rounded-xl text-center focus:outline-none focus:ring-1 focus:ring-[#A7522A]"
+                  />
+                  <input
+                    type="text"
+                    maxLength={2}
+                    placeholder="MM"
+                    value={formData.ed.split('-')[1] || ''}
+                    onChange={(e) => handleEDChange(1, e.target.value)}
+                    className="bg-white w-1/3 border border-gray-300 px-3 py-3 rounded-xl text-center focus:outline-none focus:ring-1 focus:ring-[#A7522A]"
+                  />
+                  <input
+                    type="text"
+                    maxLength={2}
+                    placeholder="DD"
+                    value={formData.ed.split('-')[2] || ''}
+                    onChange={(e) => handleEDChange(2, e.target.value)}
+                    className="bg-white w-1/3 border border-gray-300 px-3 py-3 rounded-xl text-center focus:outline-none focus:ring-1 focus:ring-[#A7522A]"
+                  />
+                </div>
+
                 <input
-                  type="text"
-                  maxLength={4}
-                  placeholder="YYYY"
-                  onChange={(e) => handleEDChange(0, e.target.value)}
-                  className="bg-white w-1/3 border border-gray-300 px-3 py-3 rounded-xl text-center focus:outline-none focus:ring-1 focus:ring-[#A7522A]"
-                />
-                <input
-                  type="text"
-                  maxLength={2}
-                  placeholder="MM"
-                  onChange={(e) => handleEDChange(1, e.target.value)}
-                  className="bg-white w-1/3 border border-gray-300 px-3 py-3 rounded-xl text-center focus:outline-none focus:ring-1 focus:ring-[#A7522A]"
-                />
-                <input
-                  type="text"
-                  maxLength={2}
-                  placeholder="DD"
-                  onChange={(e) => handleEDChange(2, e.target.value)}
-                  className="bg-white w-1/3 border border-gray-300 px-3 py-3 rounded-xl text-center focus:outline-none focus:ring-1 focus:ring-[#A7522A]"
+                  type="date"
+                  value={formData.ed}
+                  onChange={handleDatePickerChange}
+                  className="bg-white w-full border border-gray-300 px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-[#A7522A]"
                 />
               </div>
             </div>
@@ -133,7 +159,6 @@ const SRegister: React.FC = () => {
             </div>
           </div>
 
-          {/* Phone Number */}
           <div>
             <label className="block text-xs font-bold uppercase mb-1 tracking-wider">Phone Number</label>
             <input
@@ -147,7 +172,6 @@ const SRegister: React.FC = () => {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-xs font-bold uppercase mb-1 tracking-wider">Password</label>
             <input
@@ -161,13 +185,7 @@ const SRegister: React.FC = () => {
             />
           </div>
 
-          {/* Upload Profile Picture - Skipped for now */}
-          {/* <div className="md:col-span-1 border-2 border-dashed border-gray-400 h-40 flex items-center justify-center rounded-xl text-center text-gray-400 bg-white">
-            <span className="text-sm font-semibold">Profile picture upload<br />is not implemented yet</span>
-          </div> */}
-
-          {/* Submit Button */}
-          <div className="md:col-span-1 flex items-center justify-center ml-150 mt-10">
+          <div className="md:col-span-1 flex items-center justify-center mt-8">
             <button
               type="submit"
               disabled={loading}
@@ -178,9 +196,20 @@ const SRegister: React.FC = () => {
           </div>
         </form>
 
-        {message && (
-          <div className="mt-4 text-center text-red-500 font-semibold">
-            {message}
+        {/* Success/Error Popup */}
+        {showPopup && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+            <div
+              className={`rounded-xl px-6 py-4 text-center shadow-md w-[90%] max-w-md
+                ${popupType === 'success'
+                  ? 'bg-[#FFFDFB] border-2 border-[#a3491c]'
+                  : 'bg-red-100 border-2 border-red-400'}`}
+            >
+              <h2 className={`text-lg font-extrabold mb-2 ${popupType === 'success' ? 'text-[#a3491c]' : 'text-red-700'}`}>
+                {popupType === 'success' ? 'Success!' : 'Error'}
+              </h2>
+              <p className="text-sm font-medium text-gray-700">{message}</p>
+            </div>
           </div>
         )}
       </div>
